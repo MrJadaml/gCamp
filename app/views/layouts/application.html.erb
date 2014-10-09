@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Jumbotron Template for Bootstrap</title>
+    <%= stylesheet_link_tag 'application' %>
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="jumbotron.css" rel="stylesheet">
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+  </head>
+  <nav>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">gCamp</a>
+        </div>
+        <
+        <ul class="pull-left">
+          <li class="navbar-brand"><%= link_to "gCamp", root_path %></li>
+          <li><%= link_to "About", about_path %></li>
+          <li><%= link_to "Terms", terms_path %></li>
+        </ul>
+        <div class="navbar-collapse collapse">
+
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+  </nav>
+
+  <%= yield %>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+  <br>
+  <br>
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted">Made by <a href="http://www.twitter.com/mrjadaml">Adam Lichty</a> &copy; gSchool 2014</p>
+  </div>
+</footer>
+</html>
+
+<!-- Bootstrap core CSS  & #### HAML ####
+ !!! 5
+%html
+%head
+  %title gCamp
+  - stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+  - javascript_include_tag 'application', 'data-turbolinks-track' => true
+  - csrf_meta_tags
+%body
+
+= yield
+-->
