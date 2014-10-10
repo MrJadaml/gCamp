@@ -10,10 +10,8 @@ class PagesController < ApplicationController
   def terms
   end
 
-  def columns
-    @columns = [
-      Tasks, Documents, Comments
-    ]
+  def test
+    @current_time = Time.now
   end
 
 end

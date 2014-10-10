@@ -1,0 +1,33 @@
+%body
+  .jumbotron
+    .container
+      %h1 gCamp
+      %p Your life organized
+  .container
+    .row
+   .col-md-4
+       = (image_tag "nycimg1.jpg", class: "img-responsive")
+       .panel.panel-primary
+         .panel-heading
+           %h2.panel-title Tasks
+         .panel-body
+           Grouped by projects and lists. Just the way you like 'em.
+     .col-md-4
+       = (image_tag "nycimg2.jpg", class: "img-responsive")
+       .panel.panel-primary
+         .panel-heading
+           %h2.panel-title Documents
+         .panel-body
+           %ul
+             %li Upload
+             %li Comment
+             %li Revise
+     .col-md-4
+       = (image_tag "nycimg3.jpg", class: "img-responsive")
+       .panel.panel-primary
+         .panel-heading
+           %h2.panel-title Comments
+         .panel-body
+           %ul
+             %li Comment on tasks and documents
+             %li Get email notification

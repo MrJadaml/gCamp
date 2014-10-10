@@ -13,3 +13,8 @@ gem 'haml', '~> 4.0.5'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'sass-rails', '>= 3.2'
 gem 'autoprefixer-rails'
+
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end

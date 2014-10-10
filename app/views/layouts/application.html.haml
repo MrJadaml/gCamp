@@ -1,0 +1,30 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+    %link{:href => "../../favicon.ico", :rel => "icon"}/
+    %title gCamp
+    = stylesheet_link_tag 'application'
+  %body
+    %nav
+      .navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
+        .container
+          %li.navbar-brand= link_to "gCamp", root_path
+          %li= link_to "About", about_path
+          %li= link_to "Terms", terms_path
+          .navbar-collapse.collapse
+          / /.navbar-collapse
+    = yield
+    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
+  %br/
+  %br/
+  %footer.footer
+    .container
+      %p.text-muted
+        Made by
+        %a{:href => "http://www.twitter.com/mrjadaml"} Adam Lichty
+        \© gSchool 2014
