@@ -5,29 +5,14 @@
       %p Your life organized
   .container
     .row
+
+    - @col.each do |col|
       .col-md-4
-        = (image_tag "nycimg1.jpg", class: "img-responsive")
-        .panel.panel-primary
+        .smallimg
+          = image_tag (col[:img])
+        .panel.panel-info
           .panel-heading
-            %h2.panel-title Tasks
+            %h2.panel-title= col[:title]
           .panel-body
-            Grouped by projects and lists. Just the way you like 'em.
-      .col-md-4
-        = (image_tag "nycimg2.jpg", class: "img-responsive")
-        .panel.panel-primary
-          .panel-heading
-            %h2.panel-title Documents
-          .panel-body
-            %ul
-              %li Upload
-              %li Comment
-              %li Revise
-      .col-md-4
-        = (image_tag "nycimg3.jpg", class: "img-responsive")
-        .panel.panel-primary
-          .panel-heading
-            %h2.panel-title Comments
-          .panel-body
-            %ul
-              %li Comment on tasks and documents
-              %li Get email notification
+            - col[:item].each do |list|
+              %li= list
