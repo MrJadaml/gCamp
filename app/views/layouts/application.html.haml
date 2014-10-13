@@ -14,17 +14,18 @@
       .navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
         .container
           %li.navbar-brand= link_to "gCamp", root_path
-          %li= link_to "About", about_path
-          %li= link_to "Terms", terms_path
           .navbar-collapse.collapse
           / /.navbar-collapse
     = yield
     %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
-  %br/
-  %br/
-  %footer.footer
-    .container
-      %p.text-muted
-        Made by
-        %a{:href => "http://www.twitter.com/mrjadaml"} Adam Lichty
-        \© gSchool 2014
+    %br/
+    %br/
+    %footer
+      .container.foot
+        %li= link_to "About", about_path
+        |
+        %li= link_to "Terms", terms_path
+        %p.text-muted.pull-right
+          Made by
+          %a{:href => "http://www.twitter.com/mrjadaml"} Adam Lichty
+          \© gSchool 2014

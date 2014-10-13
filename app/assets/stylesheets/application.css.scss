@@ -43,10 +43,25 @@ img {
   width: inherit;
 }
 
+.terms {
+  height: 600px;
+}
+
+.about {
+  font-size: 60px;
+  font-weight: bold;
+}
+
 .smallimg {
   width: 100%;
 }
 
-.footer {
-  border-top: 2px;
+.foot {
+  border-top: 1px solid;
+  padding-top: 6px;
+  padding-bottom: 2px;
+}
+
+footer li {
+  display: inline;
 }
