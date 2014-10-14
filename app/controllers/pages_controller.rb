@@ -21,11 +21,4 @@ class PagesController < ApplicationController
     render 'home'
   end
 
-  def about
-  end
-
-  def terms
-  end
-
-
 end

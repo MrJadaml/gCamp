@@ -14,3 +14,10 @@
         .panel-body
           - col[:item].each do |list|
             %li= list
+.container
+  - quotes = [['"You da bomb"', "-Atom"],['"This site looks killer"', "-Orca"],['"What a dope page"',"-Snoop"]]
+    %ul
+    - quotes.each do |quote|
+    %li.quotes= quote[0]
+    %li.quotes.text-muted= quote[1]
+    %br
