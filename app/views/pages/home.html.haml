@@ -21,9 +21,8 @@
 
 .container
   %div.quote-panel
-    - quotes = [['"You da bomb"', "-Atom"],['"This site looks killer"', "-Orca"],['"What a dope page"',"-Snoop"]]
-      %ul
-      - quotes.each do |quote|
-      %li.quotes= quote[0]
-      %li.quotes.text-muted= quote[1]
+    %ul
+    - @quotes.each do |quote|
+      %li.quotes= quote.quote
+      %li.quotes.text-muted= quote.author
       %br
