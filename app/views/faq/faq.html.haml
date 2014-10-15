@@ -1,0 +1,7 @@
+.container
+  %h1 Frequently Asked Questions
+  %br
+  - @faqs.each do |faq|
+    %h4= faq.question
+    %p= faq.answer
+    %br
