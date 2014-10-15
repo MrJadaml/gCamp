@@ -12,7 +12,7 @@
           .panel-heading
             %h2.panel-title= col[:title]
           .panel-body
-            - if (@col[0][:item]).size >= 1
+            - if col[:item].size == 1
               = col[:item][0]
             - else
               - col[:item].each do |list|
