@@ -22,9 +22,9 @@
     %br/
     %footer
       .container.foot
-        %li= link_to_unless_current( "About", {action: "about"})
+        %li= link_to_unless_current( "About", about_path)
         |
-        %li= link_to_unless_current( "Terms", {action: "terms"})
+        %li= link_to_unless_current( "Terms", terms_path)
         %p.text-muted.pull-right
           Made by
           %a{:href => "http://www.twitter.com/mrjadaml"} Adam Lichty

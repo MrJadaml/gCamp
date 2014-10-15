@@ -18,6 +18,7 @@ class PagesController < ApplicationController
         item: ['Comment on tasks document', 'Get email notification']
       }
     ]
+
     render 'home'
   end
 

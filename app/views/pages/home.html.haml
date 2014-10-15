@@ -4,20 +4,26 @@
     %p Your life organized
 .container
   .row
-  - @col.each do |col|
-    .col-md-4
-      .smallimg
-        = image_tag (col[:img])
-      .panel.panel-info
-        .panel-heading
-          %h2.panel-title= col[:title]
-        .panel-body
-          - col[:item].each do |list|
-            %li= list
+    - @col.each do |col|
+      .col-md-4
+        .smallimg
+          = image_tag (col[:img])
+        .panel.panel-info
+          .panel-heading
+            %h2.panel-title= col[:title]
+          .panel-body
+            - if (@col[0][:item]).size >= 1
+              = col[:item][0]
+            - else
+              - col[:item].each do |list|
+                %ul
+                %li= list
+
 .container
-  - quotes = [['"You da bomb"', "-Atom"],['"This site looks killer"', "-Orca"],['"What a dope page"',"-Snoop"]]
-    %ul
-    - quotes.each do |quote|
-    %li.quotes= quote[0]
-    %li.quotes.text-muted= quote[1]
-    %br
+  %div.quote-panel
+    - quotes = [['"You da bomb"', "-Atom"],['"This site looks killer"', "-Orca"],['"What a dope page"',"-Snoop"]]
+      %ul
+      - quotes.each do |quote|
+      %li.quotes= quote[0]
+      %li.quotes.text-muted= quote[1]
+      %br

@@ -45,6 +45,7 @@ img {
 
 .terms {
   height: 600px;
+  padding: none;
 }
 
 .about {
@@ -54,6 +55,10 @@ img {
 
 .smallimg {
   width: 100%;
+}
+
+.quote-panel {
+  padding-left: 20px;
 }
 
 li.quotes {
