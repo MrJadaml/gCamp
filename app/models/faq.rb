@@ -9,7 +9,7 @@ class Faq
     self.hashid = hashid
   end
 
-  def all
+  def self.all
     #look up what a class method is
     #self.all
     #clear array
