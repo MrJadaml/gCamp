@@ -15,12 +15,12 @@
             - if col[:item].size == 1
               = col[:item][0]
             - else
-              - col[:item].each do |list|
-                %ul
-                %li= list
+              %ul
+                - col[:item].each do |list|
+                  %li= list
 
 .container
-  %div.quote-panel
+  %div
     %ul
     - @quotes.each do |quote|
       %li.quotes= quote.quote

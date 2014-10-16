@@ -1,19 +1,14 @@
 class FaqController < ApplicationController
 
   def faq
-    faq1 = Faq.new
-    faq1.question = "What is gCamp?"
-    faq1.answer = 'gCamp is an awesome tool that is going to change your life. gCamp is your one stop shop to organize all your tasks and documents. you\'ll also be able to track comments that you and others make. gCamp may eventually replace all need for paper and pens in the entire world. Well, maybe not, but it\'s going to be pretty cool.'
+    faq1 = Faq.new('What is gCamp?', 'gCamp is an awesome tool that is going to change your life. gCamp is your one stop shop to organize all your tasks and documents. you\'ll also be able to track comments that you and others make. gCamp may eventually replace all need for paper and pens in the entire world. Well, maybe not, but it\'s going to be pretty cool.', '0', '#0')
+    faq2 = Faq.new('How do I join gCamp?', 'Right now, gCamp is still in production. So there is not a sign up page open to the public, yet! your best option is to become super best friends with a gCamp developer. They can be found hanging around gSchool during the day and hitting the hottest clubs at night.', '1', "#1")
+    faq3 = Faq.new('When will gCamp be finished?', 'gCamp is a work in progress. That being said, it should be fully functional by December 2014. Functional, but our developers are going to continue to improve the sight for the foreseeable future. Check in daily for new features and awesome functionallity. It\'s going to blow your mind. Organization is only (well, will only) be a click away. Amazing!', '2', '#2')
+    faq4 = Faq.new('What do hipsters sound like?', 'Fap paleo quinoa, organic hella Odd Future cornhole. Pug food truck tilde, pork belly McSweeney\'s flexitarian cliche brunch Pitchfork Carles YOLO lo-fi Etsy. Brunch DIY single-origin coffee, American Apparel sustainable meh disrupt tote bag Shoreditch. Selvage tofu pop-up organic fixie wolf messenger bag biodiesel aesthetic, Wes Anderson Tonx viral Godard. Disrupt Neutra roof party pickled, Marfa mustache artisan leggings Blue Bottle Truffaut. Narwhal mlkshk sriracha biodiesel viral normcore, pickled flexitarian kitsch twee fanny pack Neutra. Viral before they sold out VHS kale chips readymade.', '3', '#3')
+    faq5 = Faq.new('Why do hipsters exsit?', 'Artisan tattooed squid butcher, Bushwick keffiyeh banjo Austin chia locavore. Sustainable freegan typewriter, banh mi aesthetic small batch paleo chambray blog. Butcher mlkshk pour-over Tonx, sustainable Echo Park fashion axe cardigan actually. Heirloom irony four loko Shoreditch, pop-up normcore bespoke meh vinyl. Beard locavore bitters banh mi mlkshk meggings. Next level before they sold out distillery four loko. Whatever aesthetic Etsy ennui normcore, raw denim fingerstache banjo iPhone single-origin coffee gentrify.', '4', '#4')
+    faq6 = Faq.new('What do vegetarians eat?', 'Turnip greens yarrow ricebean rutabaga endive cauliflower sea lettuce kohlrabi amaranth water spinach avocado daikon napa cabbage asparagus winter purslane kale. Celery potato scallion desert raisin horseradish spinach carrot soko. Lotus root water spinach fennel kombu maize bamboo shoot green bean swiss chard seakale pumpkin onion chickpea gram corn pea. Brussels sprout coriander water chestnut gourd swiss chard wakame kohlrabi beetroot carrot watercress. Corn amaranth salsify bunya nuts nori azuki bean chickweed potato bell pepper artichoke.', '5', '#5')
 
-    faq2 = Faq.new
-    faq2.question = "How do I join gCamp?"
-    faq2.answer = 'Right now, gCamp is still in production. So there is not a sign up page open to the public, yet! your best option is to become super best friends with a gCamp developer. They can be found hanging around gSchool during the day and hitting the hottest clubs at night.'
-
-    faq3 = Faq.new
-    faq3.question = "When will gCamp be finished?"
-    faq3.answer = 'gCamp is a work in progress. That being said, it should be fully functional by December 2014. Functional, but our developers are going to continue to improve the sight for the foreseeable future. Check in daily for new features and awesome functionallity. It\'s going to blow your mind. Organization is only (well, will only) be a click away. Amazing!'
-
-    @faqs = [faq1, faq2, faq3]
+    @faqs = [faq1, faq2, faq3, faq4, faq5, faq6]
   end
 
 end

@@ -1,7 +1,16 @@
 .container
   %h1 Frequently Asked Questions
   %br
-  - @faqs.each do |faq|
-    %h4= faq.question
-    %p= faq.answer
-    %br
+  %br
+  %div.question-list
+    - @faqs.each do |faq, id|
+      %h4
+        %a{:href => faq.hashid}= faq.question
+      %br
+  %div.jumppad
+    - @faqs.each do |faq|
+      %a{:name => faq.id}
+      %h4= faq.question
+      %p= faq.answer
+      %br
+      
