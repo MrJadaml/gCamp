@@ -1,5 +1,4 @@
 class Faq
-
   attr_accessor :question, :answer, :id, :hashid
 
   def initialize(question, answer, id, hashid)
@@ -12,7 +11,5 @@ class Faq
   def self.all
     #look up what a class method is
     #self.all
-    #clear array
-    #explicit render
   end
 end
