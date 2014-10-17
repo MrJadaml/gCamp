@@ -1,4 +1,4 @@
-= form_for(@task) do |f|
+= form_for(@task, html: {class: 'form-horizontal'}) do |f|
   - if @task.errors.any?
     #error_explanation
       %h2
@@ -7,9 +7,8 @@
       %ul
         - @task.errors.full_messages.each do |message|
           %li= message
-  .field
-    = f.label :description
-    %br/
-    = f.text_field :description
-  .actions
-    = f.submit
+  .field.form-group
+    = f.label :description, class: "col-md-1"
+    = f.text_field :description, class: "col-md-4"
+  .actions.form-group
+    = f.submit class: "btn btn-primary col-md-offset-1"

@@ -1,5 +1,8 @@
 .container
-  %p#notice= notice
+  -if notice.nil?
+    %p
+  -else
+    %p.alert.alert-success#notice= notice
   %p
     %strong Description:
     = @task.description
