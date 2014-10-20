@@ -13,6 +13,14 @@
 
 ActiveRecord::Schema.define(version: 20141016203452) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "quotes", force: true do |t|
+    t.string "quote"
+    t.string "author"
+  end
+
   create_table "tasks", force: true do |t|
     t.string   "description"
     t.datetime "created_at"

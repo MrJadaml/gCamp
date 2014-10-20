@@ -1,12 +1,7 @@
 source 'https://rubygems.org'
 
-group :production do
-  gem 'pg'
-  gem 'rails_12factor'
-end
-
+gem 'pg'
 gem 'rails', '4.1.6'
-gem 'sqlite3', group: :development
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
@@ -18,3 +13,7 @@ gem 'haml', '~> 4.0.5'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'sass-rails', '>= 3.2'
 gem 'autoprefixer-rails'
+
+group :production do
+  gem 'rails_12factor'
+end
