@@ -1,4 +1,4 @@
-class DueDate < ActiveRecord::Migration
+class Due < ActiveRecord::Migration
   def change
     add_column :tasks, :due_date, :date
   end
