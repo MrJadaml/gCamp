@@ -9,6 +9,8 @@
     %link{:href => "../../favicon.ico", :rel => "icon"}/
     %title gCamp
     = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = csrf_meta_tag
   %body
     %nav
       .navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
