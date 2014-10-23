@@ -18,7 +18,9 @@
           %li.navbar-brand= link_to "gCamp", root_path
           .navbar-collapse.collapse
           / /.navbar-collapse
+
     = yield
+
     %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
     %br/
     %br/
@@ -30,7 +32,7 @@
         |
         %li= link_to_unless_current( "FAQs", faq_path)
         |
-        %li= link_to_unless_current( "Tasks", tasks_path)
+        %li= link_to_unless_current( "Tasks", tasks_path(complete: false))
         %p.text-muted.pull-right
           Made by
           %a{:href => "http://www.twitter.com/mrjadaml"} Adam Lichty

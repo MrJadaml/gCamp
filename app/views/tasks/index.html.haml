@@ -2,21 +2,31 @@
 %br
 .container
   .page-header
-    .pull-right= link_to 'Create Task', new_task_path, class: 'btn btn-info'
     %h1 Tasks
+    =link_to "All", tasks_path
+    |
+    =link_to "Incomplete", tasks_path(complete: false)
+    .pull-right= link_to 'Create Task', new_task_path, class: 'btn btn-info'
   %table.table
     %thead
       %tr
-        %th Description
+        %th.col-md-5 Complete
+        %th.col-md-2 Description
+        %th.col-md-2 Due
         %th{:colspan => "3"}
   %tbody
   - @tasks.each do |task|
     .col-md-12.panel
       %tr
-        %td= task.description
+        %td.col-md-5= task.description
         %td
-          .pull-right
+          .col-md-2= task.complete
+        %td
+          .col-md-3.pull-right
             = link_to 'Show', task, class: 'btn btn-primary'
             = link_to 'Edit', edit_task_path(task), class: 'btn btn-warning'
             = link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+        %td
+          .col-md-2.pull-right
+            = task.due_date
 %br/

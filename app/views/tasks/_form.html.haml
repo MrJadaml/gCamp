@@ -13,7 +13,10 @@
 
   .field.form-group
     = f.label :due, class: "col-md-1"
-    = f.date_field :due_date, class: "col-md-4"
+    = f.date_field :due_date, html: {placeholder: "  /  /  ", class: "col-md-2"}
+    %span.add-on
+      %i.glyphicon.glyphicon-calendar
+
 
   - if @task.id
     .field.form-group
