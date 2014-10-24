@@ -25,6 +25,7 @@
     %br/
     %footer
       .container.foot
+      %p.text-muted
         %li= link_to_unless_current( "About", about_path)
         |
         %li= link_to_unless_current( "Terms", terms_path)
@@ -32,7 +33,12 @@
         %li= link_to_unless_current( "FAQs", faq_path)
         |
         %li= link_to_unless_current( "Tasks", tasks_path(complete: false))
-        %p.text-muted.pull-right
-          Made by
-          %a{:href => "http://www.twitter.com/mrjadaml"} Adam Lichty
-          \© gSchool 2014
+        .pull-right
+          = link_to "www.linkedin.com/in/adamlichty/" do
+            = image_tag('linked-in.jpg', width: "20em")
+          = link_to "https://twitter.com/MrJadaml" do
+            = image_tag('twitter.jpg', width: "20em")
+          = link_to "https://github.com/MrJadaml" do
+            = image_tag('github.jpg', width: "20em")
+          = link_to "http://www.galvanize.it/school" do
+            = image_tag('gschool-logo.jpg', width: "50em")
