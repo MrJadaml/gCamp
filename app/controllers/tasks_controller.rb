@@ -11,6 +11,27 @@ class TasksController < ApplicationController
     elsif params[:complete] == 'true'
       @tasks = Task.all
     end
+
+    if params[:sort_by] == 'description'
+      @tasks = Task.order(:description)
+    elsif params[:sort_by] == 'complete'
+      @tasks = Task.order(:complete)
+    elsif params[:sort_by] == 'due_date'
+      @tasks = Task.order(:due_date)
+    end
+
+  end
+
+  def complete
+
+    @task = Task.find(params[:format])
+      puts "*" * 80
+      if @task.complete == true
+        @task.update_attribute(complete: false)
+      else
+        @task.update_attribute(complete: true)
+      end
+
   end
 
   def show

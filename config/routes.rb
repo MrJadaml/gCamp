@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
 
-  resources :tasks
+  resources :tasks do
+    collection do
+      patch 'complete'
+    end
+  end
 
   root "pages#index"
   get 'about' => 'pages#about', as: :about
   get 'terms' => 'pages#terms', as: :terms
   get 'faq'   => 'faq#faq',     as: :faq
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
