@@ -1,27 +1,27 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  
 
   def index
     @tasks = Task.all
 
-    if params[:complete] == 'false'
-      @tasks = Task.where(complete: false)
-    elsif params[:complete] == ''
-      @tasks = Task.where(complete: false)
-    elsif params[:complete] == 'true'
-      @tasks = Task.all
+    if params[:complete]
+      @tasks = Task.where(complete: params[:complete])
     end
 
-    if params[:sort_by] == 'description'
-      @tasks = Task.order(:description)
-    elsif params[:sort_by] == 'complete'
-      @tasks = Task.order(:complete)
-    elsif params[:sort_by] == 'due_date'
-      @tasks = Task.order(:due_date)
+    if params[:sort_by]
+      @tasks = Task.order(params[:sort_by])
+    end
+
+    if params[:complete] && params[:sort_by]
+      @tasks = Task.where(complete: params[:complete]).order(params[:sort_by])
     end
 
   end
 
+
+
+# Toggle the check boxes from task's index
   def complete
 
     @task = Task.find(params[:format])
