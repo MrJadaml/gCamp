@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [ :edit, :create, :update, :destroy]
+  before_action :set_user, only: [ :edit, :update, :destroy]
 
   def index
     @users = User.all
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to users_path, notice: "User was updated successfully"
     else
-       render edit
+       render :edit
     end
   end
 
