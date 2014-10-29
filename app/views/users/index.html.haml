@@ -1,6 +1,10 @@
 %br
 %br
 .container
+  -if notice.nil?
+    %p
+  -else
+    %p.alert.alert-success#notice= notice
   %h1.col-md-11 Users
   .col-md-1
     = link_to 'Create User', new_user_path, class: 'btn btn-info'
