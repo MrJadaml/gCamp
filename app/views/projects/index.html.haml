@@ -1,17 +1,17 @@
 .container
-  .col-sm-10
-    %h1 Projects
   .col-sm-2
+    %h1 Projects
+  .col-sm-offset-11
     = link_to 'Create Project', new_project_path, class: 'btn btn-primary'
   %table.table
     %thead
       %tr
-        %th.col-md-12
-          Name
+        %th
+          .col-md-12 Name
   %tbody
   - @projects.each do |project|
     .col-md-12.panel
     %tr
       %td
         .col-md-6
-          = project.name
+          = link_to project.name, project_path(project)
