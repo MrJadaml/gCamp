@@ -1,0 +1,11 @@
+.container
+  %table
+    %thead
+  %tbody
+    %tr
+      %td
+        = @project.name
+      %td
+        = link_to 'Edit', edit_project_path, class: 'btn btn-primary'
+      %td
+        = link_to 'Destroy', projects_path, method: :delete, class: 'btn btn-danger'
