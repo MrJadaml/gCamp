@@ -3,10 +3,10 @@
 .container
   %h1.col-md-8 Tasks
   .col-md-2
-    -if params[:complete]
-      = link_to "All", tasks_path
-    -else
-      = "All"
+    -# -if params[:complete]
+    = link_to "All", tasks_path(complete: true)
+    -# -else
+    -#   = "All"
     |
     = link_to_unless_current "Incomplete", tasks_path(complete: false)
   .col-md-2

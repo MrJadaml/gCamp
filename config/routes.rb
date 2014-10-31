@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :users
-  resources :projects
+  resources :users, :projects
   resources :tasks do
     collection do
       patch 'complete'

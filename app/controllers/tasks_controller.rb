@@ -1,30 +1,30 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
-    if params[:complete]
-      @tasks = Task.where(complete: params[:complete])
-    end
-    if params[:sort_by]
-      @tasks = Task.order(params[:sort_by])
-    end
-    if params[:complete] && params[:sort_by]
-      @tasks = Task.where(complete: params[:complete]).order(params[:sort_by])
-    end
-  end
 
-# Toggle the check boxes from task's index
-  def complete
-    @task = Task.find(params[:format])
-      if @task.complete == true
-        @task.update_attribute(complete: false)
-      else
-        @task.update_attribute(complete: true)
-      end
+
+    @tasks = Task.order(params[:complete]).where(complete: false)
+
+  # if params[:complete]
+  #   @tasks = Task.order(params[:sort_by])
+  #
+  #
+  # elsif params[:complete] && params[:sort_by]
+  #     @tasks = Task.where(complete: params[:complete]).order(params[:sort_by])
+  #   end
+    #
+
+    # if params[:show_completed]
+    #   @tasks = Task.order("#{sort_column} #{sort_direction}")
+    # else
+    #   @tasks = Task.order("#{sort_column} #{sort_direction}").where(complete: false)
+    # end
+  #
+  #
   end
 
   def show
+    set_task
   end
 
   def new
@@ -32,6 +32,7 @@ class TasksController < ApplicationController
   end
 
   def edit
+    set_task
   end
 
   def create
@@ -46,6 +47,7 @@ class TasksController < ApplicationController
   end
 
   def update
+    set_task
     respond_to do |format|
       if @task.update(task_params)
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
@@ -56,6 +58,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    set_task
     @task.destroy
     respond_to do |format|
       format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
@@ -69,5 +72,15 @@ class TasksController < ApplicationController
 
     def task_params
       params.require(:task).permit(:complete, :description, :due_date)
+    end
+
+    # Toggles check boxes from task's index
+    def complete
+      @task = Task.find(params[:format])
+        if @task.complete == true
+          @task.update_attribute(complete: false)
+        else
+          @task.update_attribute(complete: true)
+        end
     end
 end
