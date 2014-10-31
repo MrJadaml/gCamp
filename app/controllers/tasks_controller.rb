@@ -4,6 +4,12 @@ class TasksController < ApplicationController
 
 
     @tasks = Task.order(params[:complete]).where(complete: false)
+    #
+    # if
+    #   @events = Event.order(params[:sort_by]).page(params[:page])
+    # else
+    #   @event = Event.page(params[:page])
+    # end
 
   # if params[:complete]
   #   @tasks = Task.order(params[:sort_by])
