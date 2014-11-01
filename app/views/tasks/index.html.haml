@@ -3,31 +3,22 @@
 .container
   %h1.col-md-8 Tasks
   .col-md-2
-    -# -if params[:complete]
-    = link_to "All", tasks_path(complete: true)
-    -# -else
-    -#   = "All"
+    = link_to_unless params[:all], 'All',
+      tasks_path(all: true, sort_by: params[:sort_by])
     |
-    = link_to_unless_current "Incomplete", tasks_path(complete: false)
+    = link_to_unless params[:complete], 'Incomplete',
+      tasks_path(complete: false, sort_by: params[:sort_by])
   .col-md-2
-  = link_to 'Create Task', new_task_path, class: 'btn btn-info'
+  = link_to 'Create Task', new_task_path, class: 'btn btn-primary'
   %table.table
     %thead
       %tr
-        -if params[:complete] == 'false'
-          %th.col-md-6
-            =link_to "Description", tasks_path(complete: false, sort_by: :description)
-          %th.col-md-1
-            =link_to "Complete"
-          %th.col-md-2
-            =link_to "Due", tasks_path(complete: false, sort_by: :due_date)
-        -else
-          %th.col-md-6
-            =link_to "Description", tasks_path(sort_by: :description)
-          %th.col-md-1
-            =link_to "Complete", tasks_path(sort_by: :complete)
-          %th.col-md-2
-            =link_to "Due", tasks_path(sort_by: :due_date)
+        %th.col-md-6
+          =link_to 'Description', tasks_path(sort_by: 'description', all: params[:all], complete: params[:complete])
+        %th.col-md-1
+          =link_to 'Complete', tasks_path(sort_by: 'complete', all: params[:all], complete: params[:complete])
+        %th.col-md-2
+          =link_to 'Due', tasks_path(sort_by: 'due_date', all: params[:all], complete: params[:complete])
         %th{:colspan => "3"}
   %tbody
   - @tasks.each do |task|
