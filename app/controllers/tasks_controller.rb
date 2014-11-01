@@ -1,32 +1,11 @@
 class TasksController < ApplicationController
 
   def index
-
-
-    @tasks = Task.order(params[:complete]).where(complete: false)
-    #
-    # if
-    #   @events = Event.order(params[:sort_by]).page(params[:page])
-    # else
-    #   @event = Event.page(params[:page])
-    # end
-
-  # if params[:complete]
-  #   @tasks = Task.order(params[:sort_by])
-  #
-  #
-  # elsif params[:complete] && params[:sort_by]
-  #     @tasks = Task.where(complete: params[:complete]).order(params[:sort_by])
-  #   end
-    #
-
-    # if params[:show_completed]
-    #   @tasks = Task.order("#{sort_column} #{sort_direction}")
-    # else
-    #   @tasks = Task.order("#{sort_column} #{sort_direction}").where(complete: false)
-    # end
-  #
-  #
+    if params[:all]
+      @tasks = Task.order(params[:sort_by])
+    else
+      @tasks = Task.order(params[:sort_by]).where(complete: false)
+    end
   end
 
   def show
@@ -78,15 +57,5 @@ class TasksController < ApplicationController
 
     def task_params
       params.require(:task).permit(:complete, :description, :due_date)
-    end
-
-    # Toggles check boxes from task's index
-    def complete
-      @task = Task.find(params[:format])
-        if @task.complete == true
-          @task.update_attribute(complete: false)
-        else
-          @task.update_attribute(complete: true)
-        end
     end
 end
