@@ -1,0 +1,26 @@
+.container
+  .well.col-md-4.col-md-offset-4
+    %h2.text-center Sign Up for gCamp
+    = form_for @user, url: signup_path do |f|
+      - if @user.errors.any?
+        #error_explanation
+          %h2
+            = pluralize(@user.errors.count, "error")
+            prohibited this task from being saved:
+          %ul
+            - @user.errors.full_messages.each do |message|
+              %li= message
+      .form-group
+        = f.label :email
+        = f.email_field :email, class: 'form-control'
+
+      .form-group
+        = f.label :password
+        = f.password_field :password, class: 'form-control'
+
+      .form-group
+        =f.label :password_confirmation
+        =f.password_field :password_confirmation, class: 'form-control'
+
+      .actions.form-group
+        = f.submit 'Sign up', class: "btn btn-primary"

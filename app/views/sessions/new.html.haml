@@ -1,0 +1,16 @@
+.container
+  .well.col-md-4.col-md-offset-4
+    %h2.text-center Sign into gCamp
+    - if @sign_in_error
+      = @sign_in_error
+    = form_tag signin_path do |f|
+      .form-group
+        = label_tag :email
+        = email_field_tag :email
+
+      .form-group
+        = label_tag :password
+        = password_field_tag :password
+
+      .actions.form-group
+        = submit_tag 'Sign in', class: "btn btn-primary"
