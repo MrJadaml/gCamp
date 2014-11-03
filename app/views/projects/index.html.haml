@@ -1,6 +1,8 @@
 .container
-  %h1.col-sm-10 Projects
-  = link_to 'Create Project', new_project_path, class: 'btn btn-primary pull-right'
+  %div
+    .pull-right
+      = link_to 'Create Project', new_project_path, class: 'btn btn-primary pull-right'
+    %h1 Projects
 .container
   %table.table
     %thead

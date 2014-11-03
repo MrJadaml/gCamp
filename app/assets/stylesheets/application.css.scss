@@ -17,21 +17,15 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-.navbar li {
-  display: inline;
-}
-
 .navbar a {
   color: white;
-  font-size: 14px;
   font-weight: bold;
-  text-decoration: none;
-  padding: 10px;
 }
 
 body {
   margin-top: 45px;
 }
+
 .jumbotron {
   height: 400px;
   background: image-url('nychero.jpg');

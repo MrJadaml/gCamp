@@ -1,15 +1,15 @@
 %br
 %br
 .container
-  %h1.col-md-8 Tasks
-  .col-md-2
-    = link_to_unless params[:all], 'All',
-      tasks_path(all: true, sort_by: params[:sort_by])
-    |
-    = link_to_unless params[:complete], 'Incomplete',
-      tasks_path(complete: false, sort_by: params[:sort_by])
-  .col-md-2
-  = link_to 'Create Task', new_task_path, class: 'btn btn-primary'
+  %div
+    .pull-right
+      = link_to_unless params[:all], 'All',
+        tasks_path(all: true, sort_by: params[:sort_by])
+      |
+      = link_to_unless params[:complete], 'Incomplete',
+        tasks_path(complete: false, sort_by: params[:sort_by])
+      = link_to 'Create Task', new_task_path, class: 'btn btn-primary'
+    %h1 Tasks
   %table.table
     %thead
       %tr
@@ -28,15 +28,15 @@
         .col-md-6= task.description
       %td
         - if task.complete == true
-          .col-md-1.glyphicon.glyphicon-check.btn
+          .col-lg-1.glyphicon.glyphicon-check.btn
             -# =link_to complete_tasks_path(task), :method => :patch
         - else
-          .col-md-1.glyphicon.glyphicon-unchecked.btn
+          .col-lg-1.glyphicon.glyphicon-unchecked.btn
             -# =link_to complete_tasks_path(task), :method => :patch
       %td
         .col-md-2= task.due_date
       %td
-        .col-md-3
+        .pull-right
           = link_to 'Show', task, class: 'btn btn-primary'
           = link_to 'Edit', edit_task_path(task), class: 'btn btn-warning'
           = link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'

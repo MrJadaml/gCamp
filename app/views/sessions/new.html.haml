@@ -6,11 +6,11 @@
     = form_tag signin_path do |f|
       .form-group
         = label_tag :email
-        = email_field_tag :email
+        = email_field_tag :email, '', { class: 'form-control', 'placeholder' => 'joe@example.com' }
 
       .form-group
         = label_tag :password
-        = password_field_tag :password
+        = password_field_tag :password, '', { class: 'form-control' }
 
       .actions.form-group
         = submit_tag 'Sign in', class: "btn btn-primary"

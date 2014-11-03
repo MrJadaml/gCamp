@@ -1,9 +1,10 @@
 %br
 %br
 .container
-  %h1.col-md-11 Users
-  .col-md-1
-    = link_to 'Create User', new_user_path, class: 'btn btn-primary'
+  %div
+    .pull-right
+      = link_to 'Create User', new_user_path, class: 'btn btn-primary'
+    %h1 Users
   %table.table
     %thead
       %tr
