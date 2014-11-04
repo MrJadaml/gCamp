@@ -1,12 +1,10 @@
-%br
-%br
 .container
   %div
     .pull-right
       = link_to_unless params[:all], 'All',
         tasks_path(all: true, sort_by: params[:sort_by])
       |
-      = link_to_unless params[:complete], 'Incomplete',
+      = link_to_unless !params[:all], 'Incomplete',
         tasks_path(complete: false, sort_by: params[:sort_by])
       = link_to 'Create Task', new_task_path, class: 'btn btn-primary'
     %h1 Tasks
@@ -40,4 +38,3 @@
           = link_to 'Show', task, class: 'btn btn-primary'
           = link_to 'Edit', edit_task_path(task), class: 'btn btn-warning'
           = link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
-%br/
