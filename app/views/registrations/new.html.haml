@@ -3,12 +3,17 @@
     %h2.text-center Sign Up for gCamp
     = form_for @user, url: signup_path do |f|
       - if @user.errors.any?
-        #error_explanation
-          = pluralize(@user.errors.count, "error")
-          prohibited this task from being saved:
-          %ul
-            - @user.errors.full_messages.each do |message|
-              %li= message
+        .alert.alert-danger
+        - @user.errors.full_messages.each do |msg|
+          .text-center.no-decoration= msg
+      .form-group
+        = f.label :first_name
+        = f.text_field :first_name, class: 'form-control'
+
+      .form-group
+        = f.label :last_name
+        = f.text_field :last_name, class: 'form-control'
+
       .form-group
         = f.label :email
         = f.email_field :email, class: 'form-control'

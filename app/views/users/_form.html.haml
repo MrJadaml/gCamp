@@ -1,23 +1,27 @@
-= form_for @user, url: new_user_path, html: {class: 'form-horizontal'} do |f|
+= form_for @user, html: {class: 'form-horizontal'} do |f|
   - if @user.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@user.errors.count, "error")
-        prohibited this task from being saved:
-      %ul
-        - @user.errors.full_messages.each do |message|
-          %li= message
-  .field.form-group.col-md-offset-1
-    = f.label :first_name, class: "col-md-1"
+    .alert.alert-danger.col-md-offset-1
+      - @user.errors.full_messages.each do |msg|
+        .text-center.no-decoration= msg
+  .field.form-group.col-md-offset-2
+    = f.label :first_name, class: "col-md-2 col-md-offset-1"
     = f.text_field :first_name, class: "col-md-3"
 
-  .field.form-group.col-md-offset-1
-    = f.label :last_name, class: "col-md-1"
+  .field.form-group.col-md-offset-2
+    = f.label :last_name, class: "col-md-2 col-md-offset-1"
     = f.text_field :last_name, class: "col-md-3"
 
-  .field.form-group.col-md-offset-1
-    =f.label :email, class: "col-md-1"
+  .field.form-group.col-md-offset-2
+    =f.label :email, class: "col-md-2 col-md-offset-1"
     =f.email_field :email, class: "col-md-3"
 
-  .actions.form-group.col-md-offset-1
-    = f.submit class: "btn btn-primary col-md-offset-1"
+  .field.form-group.col-md-offset-2
+    =f.label :password, class: "col-md-2 col-md-offset-1"
+    =f.password_field :password, class: "col-md-3"
+
+  .field.form-group.col-md-offset-2
+    =f.label :password_confirmation, class: "col-md-2 col-md-offset-1"
+    =f.password_field :password_confirmation, class: "col-md-3"
+
+  .actions.form-group
+    = f.submit class: "btn btn-primary col-md-offset-3"

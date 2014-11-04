@@ -1,12 +1,9 @@
 .container
-  %table
-    %thead
-  %tbody
-    %tr
-      %td
-        .col-md-10
-          %h4= @project.name
-      %td
-        .col-md-2
-          = link_to 'Edit', edit_project_path, class: 'btn btn-primary'
-          = link_to 'Destroy', project_path, method: :delete, class: 'btn btn-danger'
+  %tr
+    %td
+      .col-md-10
+        %h4= @project.name
+    %td
+      .pull-right
+        = link_to 'Edit', edit_project_path, class: 'btn btn-primary'
+        = link_to 'Destroy', project_path, method: :delete, class: 'btn btn-danger'
