@@ -1,0 +1,45 @@
+require 'rails_helper'
+
+feature "Tasks" do
+
+  scenario "Users can create a new task" do
+
+    visit tasks_path
+    click_on 'Create Task'
+    fill_in 'Description', with: 'wowza'
+    click_on 'Create Task'
+    expect(page).to have_content('Task was successfully created.')
+    expect(page).to have_content('wowza')
+  end
+
+  scenario "Users can edit a task" do
+    Task.create!(
+      description: 'wowza'
+    )
+
+    visit tasks_path
+    expect(page).to have_content('wowza')
+    click_on 'Edit'
+    expect(page).to have_content('Editing task')
+    fill_in 'Description', with: 'wow pow'
+    check 'Complete'
+    click_on 'Update Task'
+    expect(page).to have_content('Task was successfully updated.')
+    expect(page).to have_content('wow pow')
+    # click_on 'Edit'
+    # (:checkbox).should be_checked
+  end
+
+  scenario "Users can delete a task" do
+    Task.create!(
+      description: 'wowza'
+    )
+
+    visit tasks_path
+    expect(page).to have_content('wowza')
+    click_on 'Destroy'
+    expect(page).to have_content('Task was successfully destroyed.')
+    expect(page).to have_no_content('wowza')
+  end
+
+end
