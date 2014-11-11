@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'date'
 
 feature "Tasks" do
 
@@ -40,6 +41,23 @@ feature "Tasks" do
     click_on 'Destroy'
     expect(page).to have_content('Task was successfully destroyed.')
     expect(page).to have_no_content('wowza')
+  end
+
+  scenario 'users must enter description' do
+    visit tasks_path
+    click_on 'Create Task'
+    click_on 'Create Task'
+    expect(page).to have_content("Description can't be blank")
+  end
+
+  scenario 'Users cannot enter a date in the past when creating a task' do
+    today = Date.today.strftime("%d/%m/%Y")
+    old_date = (Date.today-20).strftime("%d/%m/%Y")
+
+    visit tasks_path
+    click_on 'Create Task'
+    save_and_open_page
+    fill_in "Due", with: '11/11/2013'
   end
 
 end

@@ -38,4 +38,11 @@ feature "Projects" do
     expect(page).to have_content('edited project')
   end
 
+  scenario "Users must enter a project name" do
+    visit projects_path
+    click_on 'Create Project'
+    click_on 'Create Project'
+    expect(page).to have_content("Name can't be blank")
+  end
+
 end

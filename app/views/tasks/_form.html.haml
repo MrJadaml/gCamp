@@ -1,12 +1,12 @@
 = form_for(@task, html: {class: 'form-horizontal'}) do |f|
   - if @task.errors.any?
     #error_explanation
-      %h2
+      %h4
         = pluralize(@task.errors.count, "error")
         prohibited this task from being saved:
       %ul
-        - @task.errors.full_messages.each do |message|
-          %li= message
+        - @task.errors.full_messages.each do |msg|
+          %li= msg
   .field.form-group
     = f.label :description, class: "col-md-1"
     = f.text_field :description, class: "col-md-4"
