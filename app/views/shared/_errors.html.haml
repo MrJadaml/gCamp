@@ -1,0 +1,4 @@
+- if instance.errors.any?
+  .alert.alert-danger.col-md-offset-1.form-group
+    - instance.errors.full_messages.each do |msg|
+      .text-center.no-decoration= msg

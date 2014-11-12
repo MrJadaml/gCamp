@@ -88,7 +88,6 @@ feature "Users" do
       fill_in 'Last name', with: 'Sagen'
       fill_in 'Email', with: 'smart@mail.com'
       click_on 'Create User'
-      save_and_open_page
       expect(page).to have_content("Email has already been taken")
   end
 

@@ -56,8 +56,10 @@ feature "Tasks" do
 
     visit tasks_path
     click_on 'Create Task'
-    save_and_open_page
+    fill_in 'Description', with: 'some task'
     fill_in "Due", with: '11/11/2013'
+    click_on 'Create Task'
+    #expect(page).to have_content ''
   end
 
 end

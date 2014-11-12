@@ -1,10 +1,11 @@
 class Task < ActiveRecord::Base
-  validates :description, presence: true
+  validates :description, :due_date, presence: true
+  validate :date_cant_be_in_past
 
-  def expiration_date_cannot_be_in_the_past
-    if expiration_date.present? && expiration_date < Date.today
-      errors.add(:expiration_date, "can't be in the past")
+  def date_cant_be_in_past
+    if self.due_date.present? && self.due_date < Date.today
+      errors.add(:due_date, "can't be in the past")
     end
   end
-  
+
 end
