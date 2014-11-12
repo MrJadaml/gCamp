@@ -8,6 +8,7 @@ feature "Tasks" do
     visit tasks_path
     click_on 'Create Task'
     fill_in 'Description', with: 'wowza'
+    fill_in 'Due', with: '11/11/2015'
     click_on 'Create Task'
     expect(page).to have_content('Task was successfully created.')
     expect(page).to have_content('wowza')
@@ -15,7 +16,9 @@ feature "Tasks" do
 
   scenario "Users can edit a task" do
     Task.create!(
-      description: 'wowza'
+      description: 'wowza',
+      due_date: '11/11/2015'
+
     )
 
     visit tasks_path
@@ -23,6 +26,7 @@ feature "Tasks" do
     click_on 'Edit'
     expect(page).to have_content('Editing task')
     fill_in 'Description', with: 'wow pow'
+    fill_in 'Due', with: '11/11/2015'
     check 'Complete'
     click_on 'Update Task'
     expect(page).to have_content('Task was successfully updated.')
@@ -33,7 +37,9 @@ feature "Tasks" do
 
   scenario "Users can delete a task" do
     Task.create!(
-      description: 'wowza'
+      description: 'wowza',
+      due_date: '11/11/2015'
+
     )
 
     visit tasks_path

@@ -29,7 +29,9 @@ feature "Sessions" do
   scenario "Users can sign in with valid information" do
     User.create!(
       email: 'mail@mail.com',
-      password: 'password'
+      password: 'password',
+      first_name: 'Albert',
+      last_name: 'Einstein'
     )
 
     visit root_path

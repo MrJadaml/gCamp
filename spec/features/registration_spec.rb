@@ -33,7 +33,7 @@ feature "Registration" do
     within('.actions') do
       click_on 'Sign up'
     end
-    expect(page).to have_content('Successfully signed up')
+    expect(page).to have_content('Your life organized')
   end
 
   # scenario 'Sign up link should not show when on the Sign up page' do

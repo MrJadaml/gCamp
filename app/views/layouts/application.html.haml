@@ -23,10 +23,6 @@
             %li= link_to "Sign In", signin_path
         .navbar-brand= link_to "gCamp", root_path
     %br
-    -if notice.nil?
-      %p
-    -else
-      %p.alert.text-center.alert-success#notice= notice
     = yield
 
     %br/
