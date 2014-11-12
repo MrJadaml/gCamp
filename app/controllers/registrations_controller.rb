@@ -8,7 +8,7 @@ class RegistrationsController < ApplicationController
     @user = User.new(params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation))
     if @user.save
       session[:id] =  @user.id
-      redirect_to root_path
+      redirect_to root_path, notice: "Successfully signed up"
     else
       render :new
     end
