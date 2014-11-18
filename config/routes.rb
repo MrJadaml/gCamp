@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
 
-  resources :projects
-  resources :users
-  resources :tasks do
-    collection do
-      patch 'complete'
+  resources :projects do
+    resources :tasks do
+      collection do
+        patch 'complete'
+      end
     end
   end
+  resources :users
 
   root "pages#index"
   get  'about'  => 'pages#about', as: :about

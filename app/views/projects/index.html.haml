@@ -17,3 +17,6 @@
       %td
         .col-md-6
           = link_to project.name, project_path(project)
+      %td
+        .col-md-6
+          = link_to project.tasks.count, project_tasks_path(project, @task)

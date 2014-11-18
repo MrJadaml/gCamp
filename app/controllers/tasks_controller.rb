@@ -1,10 +1,13 @@
 class TasksController < ApplicationController
+  before_action do
+    @project = Project.find(params[:project_id])
+  end
 
   def index
     if params[:all]
-      @tasks = Task.order(params[:sort_by])
+      @tasks = @project.tasks.order(params[:sort_by])
     else
-      @tasks = Task.order(params[:sort_by]).where(complete: false)
+      @tasks = @project.tasks.order(params[:sort_by]).where(complete: false)
     end
   end
 
@@ -13,7 +16,7 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task = Task.new
+    @task = @project.tasks.new
   end
 
   def edit
@@ -21,9 +24,9 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = @project.tasks.new(task_params)
     if @task.save
-      redirect_to @task, notice: 'Task was successfully created.'
+      redirect_to project_task_path(@project, @task), notice: 'Task was successfully created.'
     else
       render :new
     end
@@ -32,7 +35,7 @@ class TasksController < ApplicationController
   def update
     set_task
     if @task.update(task_params)
-      redirect_to @task, notice: 'Task was successfully updated.'
+      redirect_to project_task_path(@project, @task), notice: 'Task was successfully updated.'
     else
       render :edit
     end
@@ -46,7 +49,7 @@ class TasksController < ApplicationController
 
   private
     def set_task
-      @task = Task.find(params[:id])
+      @task = @project.tasks.find(params[:id])
     end
 
     def task_params
