@@ -1,0 +1,6 @@
+%tr
+  - form_for [@project, @membership] do |f|
+    %td= user.first_name
+    %td= f.select :role, ['Ownner', 'Member']
+    %td= f.submit
+    %td= 'Delete'

@@ -10,9 +10,9 @@
       = link_to 'Create Task', new_project_task_path, class: 'btn btn-primary'
     %h1= "Tasks for #{@project.name}"
     %ul.breadcrumb
-      %li= link_to_unless_current 'Project', project_tasks_path
-      %li= link_to_unless_current 'Stuff', '#'
-      %li= link_to_unless_current 'Things', '#'
+      %li= link_to 'Projects', projects_path
+      %li= link_to @project.name, project_path(@project)
+      %li Tasks
   %table.table
     %thead
       %tr
@@ -32,10 +32,10 @@
       %td
         - if task.complete == true
           .col-lg-1.glyphicon.glyphicon-check
-            -# =link_to complete_tasks_path(task), :method => :patch
+            -# =link_to complete_tasks_path(task), method: :patch
         - else
           .col-lg-1.glyphicon.glyphicon-unchecked
-            -# =link_to complete_tasks_path(task), :method => :patch
+            -# =link_to complete_tasks_path(task), method: :patch
       %td
         .col-md-2= task.due_date
       %td
