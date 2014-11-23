@@ -16,7 +16,7 @@
   %table.table
     %thead
       %tr
-        %th.col-md-6
+        %th.col-md-4
           =link_to 'Description', project_tasks_path(sort_by: 'description', all: params[:all], complete: params[:complete])
         %th.col-md-1
           =link_to 'Complete', project_tasks_path(sort_by: 'complete', all: params[:all], complete: params[:complete])
@@ -28,7 +28,10 @@
     .col-md-12.panel
     %tr
       %td
-        .col-md-6= task.description
+        .col-md-4
+          = link_to project_task_path(@project, task) do
+            = task.description
+            %span.badge= task.comments.count
       %td
         - if task.complete == true
           .col-lg-1.glyphicon.glyphicon-check
@@ -40,6 +43,6 @@
         .col-md-2= task.due_date
       %td
         .pull-right
-          = link_to 'Show', project_tasks_path(@project), class: 'btn btn-primary'
           = link_to 'Edit', edit_project_task_path(@project, task), class: 'btn btn-warning'
-          = link_to 'Destroy', project_task_path(@project, task), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+          = link_to project_task_path(@project, task), method: :delete, data: { confirm: 'Are you sure?' } do
+            %span.glyphicon.glyphicon-remove.red

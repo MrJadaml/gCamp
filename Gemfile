@@ -23,5 +23,6 @@ group :development, :test do
   gem 'capybara'
   gem 'launchy'
   gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'pry', '~> 0.10.1'
 end

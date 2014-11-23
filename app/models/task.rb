@@ -1,6 +1,8 @@
 class Task < ActiveRecord::Base
+  has_many :comments
+
   validates :description, :due_date, presence: true
-  validate :date_cant_be_in_past
+  validate :date_cant_be_in_past, on: :create
 
   belongs_to :project
 

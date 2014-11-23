@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :projects do
     resources :memberships
     resources :tasks do
+      resources :comments, only: [:create]
       collection do
         patch 'complete'
       end

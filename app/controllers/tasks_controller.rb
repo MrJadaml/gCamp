@@ -2,7 +2,6 @@ class TasksController < ApplicationController
   before_action do
     @project = Project.find(params[:project_id])
   end
-
   def index
     if params[:all]
       @tasks = @project.tasks.order(params[:sort_by])
@@ -13,6 +12,8 @@ class TasksController < ApplicationController
 
   def show
     set_task
+    @comment = @task.comments.new
+    @comments = @task.comments.all
   end
 
   def new
@@ -35,7 +36,7 @@ class TasksController < ApplicationController
   def update
     set_task
     if @task.update(task_params)
-      redirect_to project_task_path(@project, @task), notice: 'Task was successfully updated.'
+      redirect_to project_tasks_path(@project, @task), notice: 'Task was successfully updated.'
     else
       render :edit
     end
@@ -44,7 +45,7 @@ class TasksController < ApplicationController
   def destroy
     set_task
     @task.destroy
-    redirect_to tasks_url, notice: 'Task was successfully destroyed.'
+    redirect_to project_tasks_path(@project, @task), notice: 'Task was successfully destroyed.'
   end
 
   private

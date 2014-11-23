@@ -3,8 +3,6 @@ require 'rails_helper'
 describe "Tasks" do
 
  it 'verifies fields are not left blank' do
-   skip
-
     task = Task.new
     expect(task.valid?).to be(false)
     task.description = 'stuff'
@@ -14,8 +12,6 @@ describe "Tasks" do
   end
 
   it 'verifies task date is not set in past' do
-    skip
-
      task = Task.new
      task.description = 'stuff'
      expect(task.valid?).to be(false)
