@@ -1,8 +1,11 @@
 = form_for(@project, html: {class: 'form-horizontal'}) do |f|
   = render 'shared/errors', instance: @project
-  .field.form-group
-    = f.label :name, class: "col-md-1"
-    = f.text_field :name, class: "col-md-4 form-control"
+  .form-group.row
+    .col-md-1
+      = f.label :name
+    .col-md-4.row
+      = f.text_field :name, class: "form-control"
 
-  .actions.form-group
-    = f.submit class: "btn btn-primary col-md-offset-1"
+  .form-group
+    .col-md-offset-1
+      = f.submit class: "btn btn-primary"

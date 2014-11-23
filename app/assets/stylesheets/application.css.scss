@@ -32,7 +32,6 @@ body {
   background-size: 100%;
 }
 
-//This is the selector that is affecting the footer icon size
 img {
   padding-bottom: 20px;
 }
@@ -45,10 +44,6 @@ img {
 .about {
   font-size: 60px;
   font-weight: bold;
-}
-
-.smallimg {
-  width: 100%;
 }
 
 .quote-panel {
@@ -69,10 +64,15 @@ li.quotes {
   padding-bottom: 2px;
 }
 
+.nudge-left {
+  margin-left: 24%;
+  width: 24%;
+}
+
 footer li {
   display: inline;
 }
 
 .red {
-    color: red;
+  color: red;
 }
