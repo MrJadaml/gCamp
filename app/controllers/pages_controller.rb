@@ -21,7 +21,7 @@ class PagesController < ApplicationController
 
     quote1 = Quote.new
     quote1.author = "Atom"
-    quote1.quote = '"Oh man. This is website is da bomb"'
+    quote1.quote = '"Oh man. This website is da bomb"'
 
     quote2 = Quote.new
     quote2.author = "Orca"

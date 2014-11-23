@@ -3,25 +3,25 @@
     %h1 gCamp
     %p Your life organized
 .container
-  .row
-    - @col.each do |col|
-      .col-md-4
-        .smallimg
-          = image_tag (col[:img])
-        .panel.panel-info
-          .panel-heading
-            %h2.panel-title= col[:title]
-          .panel-body
-            - if col[:item].size == 1
-              = col[:item][0]
-            - else
-              %ul
-                - col[:item].each do |list|
-                  %li= list
+  - @col.each do |col|
+    .col-md-4
+      = image_tag (col[:img]), class: 'img-responsive'
+      .panel.panel-info
+        .panel-heading
+          %h2.panel-title= col[:title]
+        .panel-body
+          - if col[:item].size == 1
+            = col[:item][0]
+          - else
+            %ul
+              - col[:item].each do |list|
+                %li= list
 .container
-  %div
-    %ul
-    - @quotes.each do |quote|
+  %br
+  %ul.row
+    %h4.panel.row What people are saying:
+  - @quotes.each do |quote|
+    .col-md-4
       %li.quotes= quote.quote
-      %li.quotes.text-muted= quote.author
+      %li.quotes.text-muted= "-#{quote.author}"
       %br
