@@ -13,7 +13,7 @@
       .col-md-8
         .col-md-1
           = link_to member.user.last_name, user_path(member.user)
-        = f.select :role, ['Member', 'Ownner'], {}, class: 'form-control'
+        = f.select :role, ['Member', 'Ownner'], { include_blank: member.role }, class: 'form-control'
         = f.submit 'Update', class: 'btn btn-primary'
         = link_to project_membership_path(@project, member), method: :delete, data: { confirm: 'Are you sure?' } do
           %span.glyphicon.glyphicon-remove.red
