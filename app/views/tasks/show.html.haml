@@ -1,32 +1,29 @@
-.container
-  -if notice.nil?
-    %p
-  -else
-    %p.alert.alert-success#notice= notice
-  %div
-    .pull-right
-      = link_to 'Edit', edit_project_task_path(@project, @task), class: 'btn btn-primary pull-right'
-    %h1.page-header= @task.description
-  %ul.breadcrumb
-    %li= link_to 'Projects', projects_path
-    %li= link_to @project.name, project_path(@project)
-    %li= @task.description
-  %h4 Due:
-  = "#{@task.due_date}"
-  %h4 Complete:
-  = "#{@task.complete}"
-  %table
-    %thead
-      %h3 Comments
-    %tbody
-      - @comments.each do |comment|
-        %tr.row
-          %td
-            .col-md-4
-              = link_to comment.user.first_name, user_path(current_user)
-            .text-muted
-              = "#{time_ago_in_words(comment.created_at)} ago"
-          %td
-            .col-md-8
-              = comment.copy
-= render 'comments'
+-if notice.nil?
+  %p
+-else
+  %p.alert.alert-success#notice= notice
+%div
+  .pull-right
+    = link_to 'Edit', edit_project_task_path(@project, @task), class: 'btn btn-primary pull-right'
+  %h1.page-header= @task.description
+%ul.breadcrumb
+  %li= link_to 'Projects', projects_path
+  %li= link_to @project.name, project_path(@project)
+  %li= @task.description
+%h4 Due:
+= "#{@task.due_date}"
+%h4 Complete:
+= "#{@task.complete}"
+%h3 Comments
+- @comments.each do |comment|
+  .row
+    .col-md-2
+      = link_to comment.user.first_name, user_path(current_user)
+      .text-muted
+        = "#{time_ago_in_words(comment.created_at)} ago"
+      %br
+    .col-md-8
+      = comment.copy
+.row
+  .col-md-8.col-md-offset-2
+    = render 'comments'

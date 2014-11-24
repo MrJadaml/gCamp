@@ -1,19 +1,18 @@
-.container
-  = render 'shared/success'
-  %h1= "#{@project.name}: Manage Members"
-  %ul.breadcrumb
-    %li= link_to 'Projects', projects_path
-    %li= link_to @project.name, project_path(@project)
-    %li Memberships
-  = render 'shared/errors', instance: @membership
-  .well.form-inline.col-md-5
-    = render 'form'
-  - @memberships.each do |member|
-    = form_for [@project, member], html: { class: 'form-inline' } do |f|
-      .col-md-8
-        .col-md-1
-          = link_to member.user.last_name, user_path(member.user)
-        = f.select :role, ['Member', 'Ownner'], { include_blank: member.role }, class: 'form-control'
-        = f.submit 'Update', class: 'btn btn-primary'
-        = link_to project_membership_path(@project, member), method: :delete, data: { confirm: 'Are you sure?' } do
-          %span.glyphicon.glyphicon-remove.red
+= render 'shared/success'
+%h1= "#{@project.name}: Manage Members"
+%ul.breadcrumb
+  %li= link_to 'Projects', projects_path
+  %li= link_to @project.name, project_path(@project)
+  %li Memberships
+= render 'shared/errors', instance: @membership
+.well.form-inline.col-md-5
+  = render 'form'
+- @memberships.each do |member|
+  = form_for [@project, member], html: { class: 'form-inline' } do |f|
+    .col-md-8.row
+      .col-md-2.row
+        = link_to member.user.last_name, user_path(member.user)
+      = f.select :role, ['Member', 'Ownner'], { include_blank: member.role }, class: 'form-control'
+      = f.submit 'Update', class: 'btn btn-primary'
+      = link_to project_membership_path(@project, member), method: :delete, data: { confirm: 'Are you sure?' } do
+        %span.glyphicon.glyphicon-remove.red

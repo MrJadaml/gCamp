@@ -41,7 +41,7 @@ feature "Sessions" do
     within('.actions') do
       click_on 'Sign in'
     end
-    current_path.should == root_path
+    expect(page).to have_content('What people are saying:')
   end
 
 

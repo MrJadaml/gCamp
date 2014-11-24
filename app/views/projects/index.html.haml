@@ -1,26 +1,24 @@
-.container
-  = render 'shared/success'
-  %div
-    .pull-right
-      = link_to 'Create Project', new_project_path, class: 'btn btn-primary pull-right'
-    %h1 Projects
-.container
-  %table.table
-    %thead
-      %tr
-        %th.col-md-4 Name
-        %th.col-md-4 Members
-        %th.col-md-4 Tasks
-  %tbody
-  - @projects.each do |project|
-    .col-md-12.panel
+= render 'shared/success'
+%div
+  .pull-right
+    = link_to 'Create Project', new_project_path, class: 'btn btn-primary pull-right'
+  %h1 Projects
+%table.table
+  %thead
     %tr
-      %td
-        .col-md-4
-          = link_to project.name, project_path(project)
-      %td
-        .col-md-4
-          = link_to project.memberships.count, project_memberships_path(project)
-      %td
-        .col-md-4
-          = link_to project.tasks.count, project_tasks_path(project, @task)
+      %th.col-md-4 Name
+      %th.col-md-4 Members
+      %th.col-md-4 Tasks
+%tbody
+- @projects.each do |project|
+  .col-md-12.panel
+  %tr
+    %td
+      .col-md-4.row
+        = link_to project.name, project_path(project)
+    %td
+      .col-md-4
+        = link_to project.memberships.count, project_memberships_path(project)
+    %td
+      .col-md-4
+        = link_to project.tasks.count, project_tasks_path(project, @task)

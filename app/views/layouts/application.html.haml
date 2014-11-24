@@ -11,40 +11,40 @@
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
     = csrf_meta_tag
+  %nav.navbar.navbar-inverse.navbar-fixed-top{:role => 'navigation'}
+    .container
+      %ul.nav.navbar-nav.navbar-right
+        -if current_user
+          %li= link_to current_user.full_name, current_user
+          %li= link_to "Sign Out", signout_path
+        -else
+          %li= link_to 'Sign Up', signup_path unless current_page?(signup_path)
+          %li= link_to "Sign In", signin_path unless current_page?(signin_path)
+      .navbar-brand= link_to "gCamp", root_path
+  %br
   %body
-    %nav.navbar.navbar-inverse.navbar-fixed-top{:role => 'navigation'}
-      .container
-        %ul.nav.navbar-nav.navbar-right
-          -if current_user
-            %li= link_to current_user.full_name, current_user
-            %li= link_to "Sign Out", signout_path
-          -else
-            %li= link_to 'Sign Up', signup_path unless current_page?(signup_path)
-            %li= link_to "Sign In", signin_path unless current_page?(signin_path)
-        .navbar-brand= link_to "gCamp", root_path
-    %br
-    = yield
-
-    %br/
-    %br/
-    %footer
-      .container.foot
-        %p.text-muted
-          %li= link_to_unless_current( "About", about_path)
-          |
-          %li= link_to_unless_current( "Terms", terms_path)
-          |
-          %li= link_to_unless_current( "FAQs", faq_path)
-          |
-          %li= link_to_unless_current( "Users", users_path)
-          |
-          %li= link_to_unless_current( "Projects", projects_path)
-          .pull-right
-            = link_to "www.linkedin.com/in/adamlichty/" do
-              = image_tag('linked-in.jpg', width: "20em")
-            = link_to "https://twitter.com/MrJadaml" do
-              = image_tag('twitter.jpg', width: "20em")
-            = link_to "https://github.com/MrJadaml" do
-              = image_tag('github.jpg', width: "20em")
-            = link_to "http://www.galvanize.it/school" do
-              = image_tag('gschool-logo.jpg', width: "50em")
+    .container
+      = yield
+      %br/
+      %br/
+      %footer.col-md-12.row
+        .foot
+          %p.text-muted
+            %li= link_to_unless_current( "About", about_path)
+            |
+            %li= link_to_unless_current( "Terms", terms_path)
+            |
+            %li= link_to_unless_current( "FAQs", faq_path)
+            |
+            %li= link_to_unless_current( "Users", users_path)
+            |
+            %li= link_to_unless_current( "Projects", projects_path)
+            .pull-right
+              = link_to "www.linkedin.com/in/adamlichty/" do
+                = image_tag('linked-in.jpg', width: "20em")
+              = link_to "https://twitter.com/MrJadaml" do
+                = image_tag('twitter.jpg', width: "20em")
+              = link_to "https://github.com/MrJadaml" do
+                = image_tag('github.jpg', width: "20em")
+              = link_to "http://www.galvanize.it/school" do
+                = image_tag('gschool-logo.jpg', width: "50em")
