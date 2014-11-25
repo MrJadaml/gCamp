@@ -1,19 +1,13 @@
-.container
-  = render 'shared/success'
-  .col-sm-11
-    %h1= @user.full_name
-  .col-sm-1
-    = link_to 'Edit', edit_user_path, class: 'btn btn-primary'
+= render 'shared/success'
+.pull-right
+  = link_to 'Edit', edit_user_path, class: 'btn btn-primary'
+%h1= @user.full_name
+%dl.dl-horizontal
+  %dt First name
+  %dd= @user.first_name
   %br
+  %dt Last name
+  %dd= @user.last_name
   %br
-  %br
-  %br
-  %dl.dl-horizontal
-    %dt First name
-    %dd= @user.first_name
-    %br
-    %dt Last name
-    %dd= @user.last_name
-    %br
-    %dt Email
-    %dd= mail_to @user.email
+  %dt Email
+  %dd= mail_to @user.email

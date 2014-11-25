@@ -13,12 +13,14 @@ describe 'Member' do
 
     project = Project.create!(name: 'pname')
 
-    membership = bob.project.memberships.create!(
+    membership = bob.memberships.create!(
                    user_id: bob.id,
                    role: 'member',
                    project_id: project.id
                  )
 
+    membership.role = 'owner'
+    expect(membership.valid?).to be(true)
   end
 
 end

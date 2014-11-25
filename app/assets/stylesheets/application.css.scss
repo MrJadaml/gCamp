@@ -26,14 +26,18 @@ body {
   margin-top: 45px;
 }
 
+footer li {
+  display: inline;
+}
+
+li.quotes {
+  list-style-type: none;
+}
+
 .jumbotron {
   height: 400px;
   background: image-url('nychero.jpg');
   background-size: 100%;
-}
-
-img {
-  padding-bottom: 20px;
 }
 
 .terms {
@@ -41,37 +45,23 @@ img {
   padding: none;
 }
 
+.jumppad {
+  margin-top: 50px;
+}
+
 .about {
   font-size: 60px;
   font-weight: bold;
 }
 
-.quote-panel {
-  padding-left: 20px;
-}
-
-li.quotes {
-  list-style-type: none;
-}
-
-.jumppad {
-  margin-top: 50px;
-}
-
 .foot {
   border-top: 1px solid;
-  padding-top: 6px;
-  padding-bottom: 2px;
   margin-top: 25px;
 }
 
 .nudge-left {
   margin-left: 24%;
   width: 24%;
-}
-
-footer li {
-  display: inline;
 }
 
 .red {

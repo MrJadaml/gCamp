@@ -11,34 +11,32 @@
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
     = csrf_meta_tag
-  %nav.navbar.navbar-inverse.navbar-fixed-top{:role => 'navigation'}
-    .container
-      %ul.nav.navbar-nav.navbar-right
-        -if current_user
-          %li= link_to current_user.full_name, current_user
-          %li= link_to "Sign Out", signout_path
-        -else
-          %li= link_to 'Sign Up', signup_path unless current_page?(signup_path)
-          %li= link_to "Sign In", signin_path unless current_page?(signin_path)
-      .navbar-brand= link_to "gCamp", root_path
-  %br
   %body
+    %nav.navbar.navbar-inverse.navbar-fixed-top{:role => 'navigation'}
+      .container
+        %ul.nav.navbar-nav.navbar-right
+          -if current_user
+            %li= link_to current_user.full_name, current_user
+            %li= link_to "Sign Out", signout_path
+          -else
+            %li= link_to 'Sign Up', signup_path unless current_page?(signup_path)
+            %li= link_to "Sign In", signin_path unless current_page?(signin_path)
+        .navbar-brand= link_to "gCamp", root_path
     .container
       = yield
-      %br/
-      %br/
-      %footer.col-md-12.row
-        .foot
-          %p.text-muted
-            %li= link_to_unless_current( "About", about_path)
-            |
-            %li= link_to_unless_current( "Terms", terms_path)
-            |
-            %li= link_to_unless_current( "FAQs", faq_path)
-            |
-            %li= link_to_unless_current( "Users", users_path)
-            |
-            %li= link_to_unless_current( "Projects", projects_path)
+      %footer.foot.col-md-12
+        .row
+          %p
+            %ul.col-md-6.row
+              %li= link_to_unless_current( "About", about_path)
+              |
+              %li= link_to_unless_current( "Terms", terms_path)
+              |
+              %li= link_to_unless_current( "FAQs", faq_path)
+              |
+              %li= link_to_unless_current( "Users", users_path)
+              |
+              %li= link_to_unless_current( "Projects", projects_path)
             .pull-right
               = link_to "www.linkedin.com/in/adamlichty/" do
                 = image_tag('linked-in.jpg', width: "20em")

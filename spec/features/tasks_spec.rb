@@ -47,12 +47,7 @@ feature "Tasks" do
 
     visit project_tasks_path(project)
     expect(page).to have_content('wowza')
-    within(:css, 'span.glyphicon') do
-      click_link('red')
-
-    find('.glyphicon').find(:xpath, '.[2]').select_option
-
-    end
+    click_on 'delete'
     expect(page).to have_content('Task was successfully destroyed.')
     expect(page).to have_no_content('wowza')
   end
