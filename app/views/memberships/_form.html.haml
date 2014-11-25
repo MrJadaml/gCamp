@@ -1,6 +1,6 @@
 = form_for [@project, @membership], html: {role: 'form', class: 'form-inline'} do |f|
   .form-group
-    = f.collection_select(:user_id, User.all,:id,:last_name,{include_blank: 'Please select a user'}, {class: 'form-control'})
+    = f.collection_select(:user_id, User.all,:id, :full_name,{include_blank: 'Please select a user'}, {class: 'form-control'})
   .form-group
     = f.select :role, ['Member', 'Owner'], {}, {class: 'dropdown-toggle form-control'}
   .form-group
