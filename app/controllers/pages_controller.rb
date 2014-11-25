@@ -1,5 +1,12 @@
 class PagesController < ApplicationController
 
+  def about
+    @projects = Project.all
+    @tasks = Task.all
+    @memberships = Membership.all
+    @users = User.all
+    @comments = Comment.all
+  end
   def index
     @col = [
       {

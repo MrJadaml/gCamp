@@ -5,7 +5,7 @@
   %li= link_to @project.name, project_path(@project)
   %li Memberships
 = render 'shared/errors', instance: @membership
-.well.form-inline.col-md-5
+.well.col-md-5
   = render 'form'
 - @memberships.each do |member|
   = form_for [@project, member], html: { class: 'form-inline' } do |f|
