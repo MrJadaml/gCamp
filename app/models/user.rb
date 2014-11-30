@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
-  has_many :comments, dependent: :destroy
+  has_many :comments, dependent: :nullify
   has_many :projects, through: :memberships
 
 

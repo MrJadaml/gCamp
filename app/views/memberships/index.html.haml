@@ -4,13 +4,16 @@
   %li= link_to 'Projects', projects_path
   %li= link_to @project.name, project_path(@project)
   %li Memberships
-= render 'shared/errors', instance: @membership
+- if @membership.errors.any?
+  .alert.alert-danger.form-group
+    - @membership.errors.full_messages.each do |msg|
+      .text-center.no-decoration= msg
 .well.col-md-5
   = render 'form'
 - @memberships.each do |member|
   = form_for [@project, member], html: { class: 'form-inline' } do |f|
     .col-md-8.row
-      .col-md-2.row
+      .col-md-2.row.pad-bottom
         = link_to member.user.full_name, user_path(member.user)
       = f.select :role, ['Owner', 'Member'], {}, class: 'form-control'
       = f.submit 'Update', class: 'btn btn-primary'

@@ -12,4 +12,4 @@
     %p
       gCamp is extreamly active. Just check out our killer stats below!
 
-    = "#{@projects.count} Projects, #{@tasks.count} Tasks, #{@memberships.count} Project members, #{@users.count} Users, #{@comments.count} Comments"
+    = "#{pluralize(@projects.count, 'Project')}, #{pluralize(@tasks.count, 'Task')}, #{pluralize(@memberships.count, 'Project member')}, #{pluralize(@users.count, 'User')}, #{pluralize(@comments.count, 'Comment')}"

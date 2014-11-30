@@ -4,7 +4,7 @@
 .row
   - @col.each do |col|
     .col-md-4
-      = image_tag (col[:img]), class: 'img-responsive'
+      = image_tag (col[:img]), class: 'img-responsive pad-bottom'
       .panel.panel-info
         .panel-heading
           %h2.panel-title= col[:title]

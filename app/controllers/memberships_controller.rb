@@ -12,7 +12,8 @@ class MembershipsController < ApplicationController
   def create
     @membership = @project.memberships.new(membership_params)
     if @membership.save
-      redirect_to project_memberships_path, notice: "#{@membership.user.first_name} was created!"
+      redirect_to project_memberships_path,
+      notice: "#{@membership.user.first_name.capitalize} was added successfully"
     else
       @memberships = @project.memberships.all
       render :index
@@ -23,7 +24,7 @@ class MembershipsController < ApplicationController
   def update
     @membership = @project.memberships.find(params[:id])
     if @membership.update(membership_params)
-      redirect_to project_memberships_path, notice: "#{@membership.user.first_name} was updated!"
+      redirect_to project_memberships_path, notice: "#{@membership.user.first_name.capitalize} was updated successfully"
     else
       render :index
     end
@@ -32,7 +33,7 @@ class MembershipsController < ApplicationController
   def destroy
     @membership = @project.memberships.find(params[:id])
     @project.memberships.find(params[:id]).destroy
-    redirect_to project_memberships_path, notice: "#{@membership.user.first_name} Member was removed"
+    redirect_to project_memberships_path, notice: "#{@membership.user.first_name.capitalize} was removed successfully"
   end
 
   private
