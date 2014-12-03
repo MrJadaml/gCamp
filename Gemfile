@@ -25,4 +25,5 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'pry', '~> 0.10.1'
+  gem 'faker'
 end
