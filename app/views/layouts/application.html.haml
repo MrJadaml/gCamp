@@ -14,8 +14,25 @@
   %body
     %nav.navbar.navbar-inverse.navbar-fixed-top{:role => 'navigation'}
       .container
-        = link_to "gCamp", root_path, class: 'navbar-brand'
+        = link_to "gCamp", projects_path, class: 'navbar-brand'
+        %ul.nav.navbar-nav
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              My Projects
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              %li
+                %a{:href => "#"} Action
+              %li
+                %a{:href => "#"} Another action
+              %li
+                %a{:href => "#"} Something else here
+              %li.divider
+              %li= link_to 'New Project', new_project_path
+          %li= link_to 'Users', users_path
+
         %ul.nav.navbar-nav.navbar-right
+          %ul.nav.navbar-nav
           -if current_user
             %li= link_to current_user.full_name, current_user
             %li= link_to "Sign Out", signout_path
@@ -25,24 +42,14 @@
     .container
       = yield
       %footer.foot.col-md-12
-        .row
-          %p
-            %ul.col-md-6.row
-              %li= link_to_unless_current( "About", about_path)
-              |
-              %li= link_to_unless_current( "Terms", terms_path)
-              |
-              %li= link_to_unless_current( "FAQs", faq_path)
-              |
-              %li= link_to_unless_current( "Users", users_path)
-              |
-              %li= link_to_unless_current( "Projects", projects_path)
-            .pull-right
-              = link_to "www.linkedin.com/in/adamlichty/" do
-                = image_tag('linked-in.jpg', width: "20em")
-              = link_to "https://twitter.com/MrJadaml" do
-                = image_tag('twitter.jpg', width: "20em")
-              = link_to "https://github.com/MrJadaml" do
-                = image_tag('github.jpg', width: "20em")
-              = link_to "http://www.galvanize.it/school" do
-                = image_tag('gschool-logo.jpg', width: "50em")
+        %p.row
+          %ul.text-center
+            %li= link_to_unless_current( "About", about_path)
+            |
+            %li= link_to_unless_current( "Terms", terms_path)
+            |
+            %li= link_to_unless_current( "FAQs", faq_path)
+            |
+            %li= link_to_unless_current( "Users", users_path)
+            |
+            %li= link_to_unless_current( "Projects", projects_path)

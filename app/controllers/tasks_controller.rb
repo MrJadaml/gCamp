@@ -1,7 +1,9 @@
 class TasksController < ApplicationController
-  before_action do
-    @project = Project.find(params[:project_id])
-  end
+  before_action :members_only
+  # before_action do
+  #   @project = Project.find(params[:project_id])
+  # end
+
   def index
     if params[:all]
       @tasks = @project.tasks.order(params[:sort_by])
@@ -55,5 +57,12 @@ class TasksController < ApplicationController
 
     def task_params
       params.require(:task).permit(:complete, :description, :due_date)
+    end
+
+    def members_only
+      @project = Project.find(params[:project_id])
+      unless @project.memberships.pluck(:user_id).include?(current_user.id) || current_user.admin
+        raise AccessDenied
+      end
     end
 end

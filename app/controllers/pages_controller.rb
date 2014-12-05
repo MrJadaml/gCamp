@@ -1,4 +1,5 @@
-class PagesController < ApplicationController
+class PagesController < PublicController
+  skip_before_action :ensure_logged_in
 
   def about
     @projects = Project.all

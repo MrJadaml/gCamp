@@ -1,4 +1,5 @@
-class SessionsController < ApplicationController
+class SessionsController < PublicController
+  skip_before_action :ensure_logged_in, only: [:new, :create]
 
   def new
     @user = User.new
@@ -8,7 +9,7 @@ class SessionsController < ApplicationController
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:id] = user.id
-      redirect_to root_path
+      redirect_to projects_path
     else
       @sign_in_error = "Username / password combo is invalid"
       render :new

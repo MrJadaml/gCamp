@@ -13,6 +13,7 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'sass-rails', '>= 3.2'
 gem 'autoprefixer-rails'
 gem 'bcrypt', '~> 3.1.7'
+gem 'faker'
 
 group :production do
   gem 'rails_12factor'
@@ -25,5 +26,4 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'pry', '~> 0.10.1'
-  gem 'faker'
 end

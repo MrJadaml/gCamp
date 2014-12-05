@@ -1,6 +1,6 @@
-class TermsController < ApplicationController
+class TermsController < PublicController
 
   def terms
   end
-  
+
 end
