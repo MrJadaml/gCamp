@@ -53,6 +53,30 @@ describe ProjectsController do
       expect(response).to redirect_to(signin_path)
     end
 
+    it 'should 404 a non-member on show page' do
+      session[:id] = @user
+      get :show, id: @project
+      expect(response.status).to eq(404)
+    end
+
+    it 'should allow a Member to view the show page' do
+      session[:id] = @member
+      get :show, id: @project
+      expect(response).to be_success
+    end
+
+    it 'should allow an Owner to view the show page' do
+      session[:id] = @owner
+      get :show, id: @project
+      expect(response).to be_success
+    end
+
+    it 'should allow an admin to view the show page' do
+      session[:id] = @admin
+      get :show, id: @project
+      expect(response).to be_success
+    end
+
   end
 
 # --------------------------------> #new/create <-----------------------------
