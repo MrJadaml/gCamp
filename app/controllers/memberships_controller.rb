@@ -7,11 +7,10 @@ class MembershipsController < ApplicationController
   def index
     @membership = @project.memberships.new
     @memberships = @project.memberships.all
-    binding.pry
   end
 
   def create
-    # unless current_user.role == Owner || current_user.admin --> 404
+    raise AccessDenied unless owner_or_admin?
     @membership = @project.memberships.new(membership_params)
     if @membership.save
       redirect_to project_memberships_path,
@@ -42,5 +41,9 @@ class MembershipsController < ApplicationController
 
     def membership_params
       params.require(:membership).permit(:role, :user_id, :project_id)
+    end
+
+    def owner_or_admin?
+      @project.memberships.find_by(user_id: current_user.id).role == 'Owner' || current_user.admin?
     end
 end

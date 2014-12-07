@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  skip_before_action :members_only, only: [:index, :new, :create]
   def index
     @projects = Project.all
   end

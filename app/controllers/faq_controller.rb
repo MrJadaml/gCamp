@@ -1,5 +1,5 @@
 class FaqController < PublicController
-
+  
   def faq
     faq1 = Faq.new('What is gCamp?', 'gCamp is an awesome tool that is going to change your life. gCamp is your one stop shop to organize all your tasks and documents. you\'ll also be able to track comments that you and others make. gCamp may eventually replace all need for paper and pens in the entire world. Well, maybe not, but it\'s going to be pretty cool.', '0', '#0')
     faq2 = Faq.new('How do I join gCamp?', 'Right now, gCamp is still in production. So there is not a sign up page open to the public, yet! your best option is to become super best friends with a gCamp developer. They can be found hanging around gSchool during the day and hitting the hottest clubs at night.', '1', "#1")

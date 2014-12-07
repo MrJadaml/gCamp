@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   rescue_from AccessDenied, with: :serve_404
 
   def members_only
-    @project = Project.find(params[:project_id])
+    @project = Project.find(params[:project_id] || params[:id])
     unless @project.memberships.pluck(:user_id).include?(current_user.id) || current_user.admin
       raise AccessDenied
     end

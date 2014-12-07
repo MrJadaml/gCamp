@@ -42,6 +42,7 @@ describe MembershipsController do
 
     it 'should 404 a non-member' do
       session[:id] = @user
+
       get :create, project_id: @project
       expect(response.status).to eq(404)
     end
@@ -50,7 +51,7 @@ describe MembershipsController do
       membership = create_membership user: @user, project: @project
 
       session[:id] = @user
-      get :index, project_id: @project
+      get :create, project_id: @project
       expect(response.status).to eq(404)
     end
   end

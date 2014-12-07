@@ -102,30 +102,31 @@ describe TasksController do
 
     it 'should 404 on project pages for non-members' do
       session[:id] = @user
+
       get :new, project_id: @project
       expect(response.status).to eq(404)
     end
 
     it 'should render #new if user is a Member' do
       membership = create_membership user: @user, project: @project
-
       session[:id] = @user
+
       get :new, project_id: @project
       expect(response).to be_success
     end
 
     it 'should render show if user is an Owner' do
       membership = create_membership user: @user, project: @project
-
       session[:id] = @user
+
       get :new, project_id: @project
       expect(response).to be_success
     end
 
     it 'should render new if user is an admin' do
       admin = create_user admin: true
-
       session[:id] = admin.id
+
       get :new, project_id: @project
       expect(response).to be_success
     end
