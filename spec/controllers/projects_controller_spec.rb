@@ -1,13 +1,13 @@
 require 'rails_helper'
 describe ProjectsController do
   before do
-    @project = Project.create!(name: 'NASA')
-    @user = User.create!(
-      first_name: 'Albert',
-      last_name: 'Einstein',
-      password: 'password',
-      email: 'xyz@mail.com'
-    )
+    @project = create_project
+    @admin = create_user admin: true
+    @user = create_user
+    @member = create_user
+    @owner= create_user
+    @member_membership = create_membership user: @member, project: @project
+    @owner_membership = create_membership user: @owner, project: @project, role: 'Owner'
   end
 
 # --------------------------------> #index <----------------------------------
@@ -20,12 +20,28 @@ describe ProjectsController do
     end
 
     it 'should render index for non member' do
-    skip
-      session[:id] = @user.id
+      session[:id] = @user
       get :index
       expect(response).to be_success
     end
 
+    it 'should render index for a Member' do
+      session[:id] = @member
+      get :index
+      expect(response).to be_success
+    end
+
+    it 'should render index for an Owner' do
+      session[:id] = @owner
+      get :index
+      expect(response).to be_success
+    end
+
+    it 'should render index for an Owner' do
+      session[:id] = @admin
+      get :index
+      expect(response).to be_success
+    end
   end
 
 # --------------------------------> #show <-----------------------------------
