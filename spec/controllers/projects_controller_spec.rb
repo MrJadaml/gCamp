@@ -88,6 +88,29 @@ describe ProjectsController do
       expect(response).to redirect_to(signin_path)
     end
 
+    it 'should allow a user to create a project' do
+      project = {project: {name: 'stuff'}}
+      session[:id] = @user
+
+      post :create, project
+      expect(response).to redirect_to project_tasks_path(Project.last.id)
+    end
+
+    it 'should allow an Admin to create a project' do
+      project = {project: {name: 'stuff'}}
+      session[:id] = @admin
+
+      post :create, project
+      expect(response).to redirect_to project_tasks_path(Project.last.id)
+    end
+
+    it 'should set role for the creator of the project to Owner' do
+      project = {project: {name: 'stuff'}}
+      session[:id] = @user
+
+      post :create, project
+      expect(Membership.last.role).to eq('Owner')
+    end
   end
 
 # --------------------------------> #edit/update <----------------------------
