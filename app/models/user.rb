@@ -12,4 +12,8 @@ class User < ActiveRecord::Base
     [first_name.capitalize, last_name.capitalize].join(' ')
   end
 
+  def is_an_admin?
+    self.admin
+  end
+
 end

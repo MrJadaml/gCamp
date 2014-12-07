@@ -72,6 +72,14 @@ describe MembershipsController do
       expect(response.status).to eq(404)
     end
 
+    it 'should 404 if user is a Member' do
+      membership = create_membership user: @user, project: @project
+
+      session[:id] = @user
+      post :update, project_id: @project, id: @membership, membership: {role: 'Member'}
+      expect(response.status).to eq(404)
+    end
+
   end
 
 # --------------------------------> #destroy <--------------------------------
@@ -86,6 +94,14 @@ describe MembershipsController do
     it 'should 404 a non-member' do
       session[:id] = @user
       get :destroy, project_id: @project, id: @membership
+      expect(response.status).to eq(404)
+    end
+
+    it 'should 404 if user is a Member' do
+      membership = create_membership user: @user, project: @project
+
+      session[:id] = @user
+      delete :destroy, project_id: @project, id: @membership, membership: {role: 'Member'}
       expect(response.status).to eq(404)
     end
 
