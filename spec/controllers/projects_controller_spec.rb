@@ -1,13 +1,13 @@
 require 'rails_helper'
 describe ProjectsController do
   before do
-    @project = Project.create!(name: 'NASA')
-    @user = User.create!(
-      first_name: 'Albert',
-      last_name: 'Einstein',
-      password: 'password',
-      email: 'xyz@mail.com'
-    )
+    @project = create_project
+    @admin = create_user admin: true
+    @user = create_user
+    @member = create_user
+    @owner= create_user
+    @member_membership = create_membership user: @member, project: @project
+    @owner_membership = create_membership user: @owner, project: @project, role: 'Owner'
   end
 
 # --------------------------------> #index <----------------------------------
@@ -20,12 +20,28 @@ describe ProjectsController do
     end
 
     it 'should render index for non member' do
-    skip
-      session[:id] = @user.id
+      session[:id] = @user
       get :index
       expect(response).to be_success
     end
 
+    it 'should render index for a Member' do
+      session[:id] = @member
+      get :index
+      expect(response).to be_success
+    end
+
+    it 'should render index for an Owner' do
+      session[:id] = @owner
+      get :index
+      expect(response).to be_success
+    end
+
+    it 'should render index for an Owner' do
+      session[:id] = @admin
+      get :index
+      expect(response).to be_success
+    end
   end
 
 # --------------------------------> #show <-----------------------------------
@@ -35,6 +51,30 @@ describe ProjectsController do
     it 'should redirect visitors to signin page' do
       get :show, id: @project
       expect(response).to redirect_to(signin_path)
+    end
+
+    it 'should 404 a non-member on show page' do
+      session[:id] = @user
+      get :show, id: @project
+      expect(response.status).to eq(404)
+    end
+
+    it 'should allow a Member to view the show page' do
+      session[:id] = @member
+      get :show, id: @project
+      expect(response).to be_success
+    end
+
+    it 'should allow an Owner to view the show page' do
+      session[:id] = @owner
+      get :show, id: @project
+      expect(response).to be_success
+    end
+
+    it 'should allow an admin to view the show page' do
+      session[:id] = @admin
+      get :show, id: @project
+      expect(response).to be_success
     end
 
   end
@@ -48,6 +88,29 @@ describe ProjectsController do
       expect(response).to redirect_to(signin_path)
     end
 
+    it 'should allow a user to create a project' do
+      project = {project: {name: 'stuff'}}
+      session[:id] = @user
+
+      post :create, project
+      expect(response).to redirect_to project_tasks_path(Project.last.id)
+    end
+
+    it 'should allow an Admin to create a project' do
+      project = {project: {name: 'stuff'}}
+      session[:id] = @admin
+
+      post :create, project
+      expect(response).to redirect_to project_tasks_path(Project.last.id)
+    end
+
+    it 'should set role for the creator of the project to Owner' do
+      project = {project: {name: 'stuff'}}
+      session[:id] = @user
+
+      post :create, project
+      expect(Membership.last.role).to eq('Owner')
+    end
   end
 
 # --------------------------------> #edit/update <----------------------------
