@@ -39,6 +39,7 @@ class MembershipsController < ApplicationController
     redirect_to project_memberships_path, notice: "#{@membership.user.first_name.capitalize} was removed successfully"
   end
 
+
   def is_an_owner?
     @project.memberships.find_by(user_id: current_user.id).role == 'Owner'
   end

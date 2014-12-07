@@ -4,6 +4,7 @@ describe MembershipsController do
     @project = create_project
     @membership = create_membership project: @project
     @user = create_user
+    @admin = create_user admin: true
   end
 
 # --------------------------------> #index <----------------------------------
@@ -29,6 +30,22 @@ describe MembershipsController do
       get :index, project_id: @project
       expect(response).to be_success
     end
+
+    it 'should render index if user is an Owner' do
+      membership = create_membership user: @user, project: @project, role: 'Owner'
+
+      session[:id] = @user
+      get :index, project_id: @project
+      expect(response).to be_success
+    end
+
+    it 'should render index if user is an Admin' do
+      membership = create_membership user: @admin
+
+      session[:id] = @admin
+      get :index, project_id: @project
+      expect(response).to be_success
+    end
   end
 
 # --------------------------------> #create <---------------------------------
@@ -36,14 +53,14 @@ describe MembershipsController do
   describe '#create' do
     it 'should redirect visitors to signin page' do
 
-      get :create, project_id: @project
+      post :create, project_id: @project
       expect(response).to redirect_to(signin_path)
     end
 
     it 'should 404 a non-member' do
       session[:id] = @user
 
-      get :create, project_id: @project
+      post :create, project_id: @project
       expect(response.status).to eq(404)
     end
 
@@ -51,8 +68,24 @@ describe MembershipsController do
       membership = create_membership user: @user, project: @project
 
       session[:id] = @user
-      get :create, project_id: @project
+      post :create, project_id: @project
       expect(response.status).to eq(404)
+    end
+
+    it 'should allow an Owner to create a membership' do
+      membership = create_membership user: @user, project: @project, role: 'Owner'
+
+      session[:id] = @user
+      post :create, project_id: @project, membership: {role: 'Member'}
+      expect(response).to be_success
+    end
+
+    it 'should allow an Admin to create a membership' do
+      membership = create_membership user: @admin, project: @project
+
+      session[:id] = @admin
+      post :create, project_id: @project, membership: {role: 'Member'}
+      expect(response).to be_success
     end
   end
 
@@ -98,6 +131,16 @@ describe MembershipsController do
     end
 
     it 'should 404 if user is a Member' do
+      binding.pry
+      membership = create_membership user: @user, project: @project
+
+      session[:id] = @user
+      delete :destroy, project_id: @project, id: @membership, membership: {role: 'Member'}
+      expect(response.status).to eq(404)
+    end
+
+    it 'should allow a Member to destroy their own membership' do
+      skip
       membership = create_membership user: @user, project: @project
 
       session[:id] = @user
