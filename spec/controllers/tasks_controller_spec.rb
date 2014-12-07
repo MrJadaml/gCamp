@@ -1,16 +1,12 @@
 require 'rails_helper'
 describe TasksController do
   before do
-    @project = Project.create!(name: 'NASA')
+    @project = create_project
+    @user = create_user
     @task = Task.create!(
       description: 'todo',
       due_date: '11/11/2016',
-    )
-    @user = User.create!(
-      first_name: 'Albert',
-      last_name: 'Einstein',
-      password: 'password',
-      email: 'ae@mail.com'
+      project_id: @project.id,
     )
   end
 
@@ -30,11 +26,7 @@ describe TasksController do
     end
 
     it 'should render index if user is a Member' do
-      Membership.create!(
-        user: @user,
-        project: @project,
-        role: 'Member'
-      )
+      membership = create_membership user: @user, project: @project
 
       session[:id] = @user
       get :index, project_id: @project
@@ -42,11 +34,7 @@ describe TasksController do
     end
 
     it 'should render index if user is an Owner' do
-      Membership.create!(
-        user: @user,
-        project: @project,
-        role: 'Owner'
-      )
+      membership = create_membership user: @user, project: @project
 
       session[:id] = @user
       get :index, project_id: @project
@@ -54,13 +42,7 @@ describe TasksController do
     end
 
     it 'should render index if user is an admin' do
-      admin = User.create!(
-        first_name: 'Edward',
-        last_name: 'Snowden',
-        password: 'password',
-        email: 'nsa@mail.com',
-        admin: true
-      )
+      admin = create_user admin: true
 
       session[:id] = admin.id
       get :index, project_id: @project
@@ -84,11 +66,7 @@ describe TasksController do
     end
 
     it 'should render show if user is a Member' do
-      Membership.create!(
-        user: @user,
-        project: @project,
-        role: 'Member'
-      )
+      membership = create_membership user: @user, project: @project
 
       session[:id] = @user
       get :show, project_id: @project, id: @task
@@ -96,11 +74,7 @@ describe TasksController do
     end
 
     it 'should render show if user is an Owner' do
-      Membership.create!(
-        user: @user,
-        project: @project,
-        role: 'Owner'
-      )
+      membership = create_membership user: @user, project: @project
 
       session[:id] = @user
       get :show, project_id: @project, id: @task
@@ -108,13 +82,7 @@ describe TasksController do
     end
 
     it 'should render show if user is an admin' do
-      admin = User.create!(
-        first_name: 'Edward',
-        last_name: 'Snowden',
-        password: 'password',
-        email: 'nsa@mail.com',
-        admin: true
-      )
+      admin = create_user admin: true
 
       session[:id] = admin.id
       get :show, project_id: @project, id: @task
@@ -139,11 +107,7 @@ describe TasksController do
     end
 
     it 'should render #new if user is a Member' do
-      Membership.create!(
-        user: @user,
-        project: @project,
-        role: 'Member'
-      )
+      membership = create_membership user: @user, project: @project
 
       session[:id] = @user
       get :new, project_id: @project
@@ -151,11 +115,7 @@ describe TasksController do
     end
 
     it 'should render show if user is an Owner' do
-      Membership.create!(
-      user: @user,
-      project: @project,
-      role: 'Owner'
-      )
+      membership = create_membership user: @user, project: @project
 
       session[:id] = @user
       get :new, project_id: @project
@@ -163,13 +123,7 @@ describe TasksController do
     end
 
     it 'should render new if user is an admin' do
-      admin = User.create!(
-        first_name: 'Edward',
-        last_name: 'Snowden',
-        password: 'password',
-        email: 'nsa@mail.com',
-        admin: true
-      )
+      admin = create_user admin: true
 
       session[:id] = admin.id
       get :new, project_id: @project
@@ -194,11 +148,7 @@ describe TasksController do
     end
 
     it 'should render edit if user is a Member' do
-      Membership.create!(
-        user: @user,
-        project: @project,
-        role: 'Member'
-      )
+      membership = create_membership user: @user, project: @project
 
       session[:id] = @user
       get :edit, project_id: @project, id: @task
@@ -206,11 +156,7 @@ describe TasksController do
     end
 
     it 'should render show if user is an Owner' do
-      Membership.create!(
-      user: @user,
-      project: @project,
-      role: 'Owner'
-      )
+      membership = create_membership user: @user, project: @project
 
       session[:id] = @user
       get :edit, project_id: @project, id: @task
@@ -218,13 +164,7 @@ describe TasksController do
     end
 
     it 'should render edit if user is an admin' do
-      admin = User.create!(
-        first_name: 'Edward',
-        last_name: 'Snowden',
-        password: 'password',
-        email: 'nsa@mail.com',
-        admin: true
-      )
+      admin = create_user admin: true
 
       session[:id] = admin.id
       get :edit, project_id: @project, id: @task
@@ -248,7 +188,8 @@ describe TasksController do
     end
 
     it 'should allow destroy if user is a Member' do
-      Membership.create!(
+    skip
+      membership = @project.memberships.create!(
         user: @user,
         project: @project,
         role: 'Member'
@@ -260,11 +201,8 @@ describe TasksController do
     end
 
     it 'should render show if user is an Owner' do
-      Membership.create!(
-      user: @user,
-      project: @project,
-      role: 'Owner'
-      )
+    skip
+      membership = create_membership user: @user, project: @project
 
       session[:id] = @user
       get :destroy, project_id: @project, id: @task
@@ -272,13 +210,8 @@ describe TasksController do
     end
 
     it 'should allow destroy if user is an admin' do
-      admin = User.create!(
-        first_name: 'Edward',
-        last_name: 'Snowden',
-        password: 'password',
-        email: 'nsa@mail.com',
-        admin: true
-      )
+    skip
+    admin = create_user admin: true
 
       session[:id] = admin.id
       get :destroy, project_id: @project, id: @task

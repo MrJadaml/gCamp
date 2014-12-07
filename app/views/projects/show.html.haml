@@ -3,13 +3,16 @@
   %li= link_to 'Projects', projects_path
   %li= @project.name
 
-%div.table
-  .pull-right
-    = link_to 'Edit', edit_project_path, class: 'btn btn-primary'
-    = link_to 'Destroy', project_path, method: :delete, data: {confirm: 'Are you sure'}, class: 'btn btn-danger'
-  %h3= @project.name
+%h3= @project.name
 %div
   %p
     = link_to pluralize(@project.tasks.count, 'Task'), project_tasks_path(@project)
   %p
     = link_to pluralize(@project.memberships.count, 'Member'), project_memberships_path(@project)
+.well
+  .row
+    %strong Delete Project
+  .row.nudge-top
+    = "Deleting this project will also delete #{pluralize(@project.memberships.count, 'membership')}, #{pluralize(@project.tasks.count, 'task')} and associated comments."
+  .row.nudge-top
+    = link_to 'Destroy', project_path, method: :delete, data: {confirm: 'Are you sure'}, class: 'btn btn-danger'

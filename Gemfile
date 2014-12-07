@@ -25,5 +25,5 @@ group :development, :test do
   gem 'launchy'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'pry', '~> 0.10.1'
+  gem 'pry-rails'
 end

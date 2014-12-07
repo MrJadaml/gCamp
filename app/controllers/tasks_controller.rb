@@ -58,11 +58,4 @@ class TasksController < ApplicationController
     def task_params
       params.require(:task).permit(:complete, :description, :due_date)
     end
-
-    def members_only
-      @project = Project.find(params[:project_id])
-      unless @project.memberships.pluck(:user_id).include?(current_user.id) || current_user.admin
-        raise AccessDenied
-      end
-    end
 end
