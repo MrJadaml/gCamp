@@ -4,6 +4,8 @@ describe MembershipsController do
     @project = create_project
     @membership = create_membership project: @project
     @user = create_user
+    @member = create_user
+    @member_membership = create_membership project: @project, user: @member
     @admin = create_user admin: true
   end
 
@@ -14,7 +16,7 @@ describe MembershipsController do
     it 'should redirect visitors to signin page' do
 
       get :index, project_id: @project
-      expect(response).to redirect_to(signin_path)
+      expect(response).to redirect_to signin_path
     end
 
     it 'should 404 a non-member' do
@@ -54,7 +56,7 @@ describe MembershipsController do
     it 'should redirect visitors to signin page' do
 
       post :create, project_id: @project
-      expect(response).to redirect_to(signin_path)
+      expect(response).to redirect_to signin_path
     end
 
     it 'should 404 a non-member' do
@@ -96,7 +98,7 @@ describe MembershipsController do
     it 'should redirect visitors to signin page' do
 
       patch :update, project_id: @project, id: @membership
-      expect(response).to redirect_to(signin_path)
+      expect(response).to redirect_to signin_path
     end
 
     it 'should 404 a non-member' do
@@ -114,21 +116,19 @@ describe MembershipsController do
     end
 
     it 'should allow an Owner to update a membership' do
-    skip
       membership = create_membership user: @user, project: @project, role: 'Owner'
 
       session[:id] = @user
       patch :update, project_id: @project, id: @membership, membership: {role: 'Owner'}
-      expect(response).to be_success
+      expect(response).to redirect_to project_memberships_path
     end
 
     it 'should allow an Admin to update a membership' do
-    skip
       membership = create_membership user: @admin, project: @project
 
       session[:id] = @admin
       patch :update, project_id: @project, id: @membership, membership: {role: 'Member'}
-      expect(response).to be_success
+      expect(response).to redirect_to project_memberships_path
     end
 
   end
@@ -138,17 +138,17 @@ describe MembershipsController do
   describe '#destroy' do
     it 'should redirect visitors to signin page' do
 
-      get :destroy, project_id: @project, id: @membership
-      expect(response).to redirect_to(signin_path)
+      delete :destroy, project_id: @project, id: @membership
+      expect(response).to redirect_to signin_path
     end
 
-    it 'should 404 a non-member' do
+    it 'should 404 a non-member trying to delete a membership' do
       session[:id] = @user
-      get :destroy, project_id: @project, id: @membership
+      delete :destroy, project_id: @project, id: @membership
       expect(response.status).to eq(404)
     end
 
-    it 'should 404 if user is a Member' do
+    it 'should 404 a Member trying to delete a membership that\'s not theirs' do
       membership = create_membership user: @user, project: @project
 
       session[:id] = @user
@@ -156,32 +156,29 @@ describe MembershipsController do
       expect(response.status).to eq(404)
     end
 
-    it 'should allow a Member to destroy their own membership' do
-    skip
-      membership = create_membership user: @user, project: @project
-
-      session[:id] = @user
-      delete :destroy, project_id: @project, id: @membership, membership: {role: 'Member'}
-      expect(response.status).to eq(404)
+    it 'should allow a Member to delete their own membership' do
+      session[:id] = @member
+      delete :destroy, project_id: @project, id: @member_membership
+      expect(response).to redirect_to projects_path
     end
 
     it 'should allow an Owner to destroy memberships' do
-    skip
       membership = create_membership user: @user, project: @project, role: 'Owner'
 
       session[:id] = @user
       delete :destroy, project_id: @project, id: @membership, membership: {role: 'Member'}
-      expect(response.status).to eq(404)
+      expect(response).to redirect_to project_memberships_path
     end
 
     it 'should allow an Admin to destroy memberships' do
-    skip
       membership = create_membership user: @admin, project: @project
 
       session[:id] = @admin
       delete :destroy, project_id: @project, id: @membership, membership: {role: 'Member'}
-      expect(response.status).to eq(404)
+      expect(response.status).to redirect_to project_memberships_path
     end
+
+    it 'should not allow the last Owner membership to be deleted'
 
   end
 end

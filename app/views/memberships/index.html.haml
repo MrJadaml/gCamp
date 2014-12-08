@@ -8,7 +8,7 @@
   .alert.alert-danger.form-group
     - @membership.errors.full_messages.each do |msg|
       .text-center.no-decoration= msg
-- if is_an_owner? || current_user.is_an_admin?
+- if current_user.admin? || role_is_owner?
   .well.col-md-5
     = render 'form'
 - @memberships.each do |member|
@@ -16,8 +16,11 @@
     .col-md-8.row
       .col-md-2.row.pad-bottom
         = link_to member.user.full_name, user_path(member.user)
-      - if is_an_owner? || current_user.is_an_admin?
+      - if current_user.admin? || role_is_owner? 
         = f.select :role, ['Owner', 'Member'], {}, class: 'form-control'
         = f.submit 'Update', class: 'btn btn-primary'
+        = link_to project_membership_path(@project, member), method: :delete, data: { confirm: 'Are you sure?' } do
+          %span.glyphicon.glyphicon-remove.red
+      - elsif member.user_id == current_user.id
         = link_to project_membership_path(@project, member), method: :delete, data: { confirm: 'Are you sure?' } do
           %span.glyphicon.glyphicon-remove.red

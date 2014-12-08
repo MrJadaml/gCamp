@@ -122,6 +122,30 @@ describe ProjectsController do
       expect(response).to redirect_to(signin_path)
     end
 
+    it 'should 404 a non-member who tries to update a project' do
+      session[:id] = @user
+      patch :update, id: @project
+      expect(response.status).to eq(404)
+    end
+
+    it 'should 404 a Member who tries to update a project' do
+      session[:id] = @member
+      patch :update, id: @project
+      expect(response.status).to eq(404)
+    end
+
+    it 'should allow an Owner to update a project' do
+      session[:id] = @owner
+      patch :update, id: @project, project: {name: 'stuff'}
+      expect(response).to redirect_to(@project)
+    end
+
+    it 'should allow an Admin to update a project' do
+      session[:id] = @admin
+      patch :update, id: @project, project: {name: 'things'}
+      expect(response).to redirect_to(@project)
+    end
+
   end
 
 # --------------------------------> #destroy <--------------------------------
@@ -131,6 +155,30 @@ describe ProjectsController do
     it 'should redirect visitors to signin page' do
       get :destroy, id: @project
       expect(response).to redirect_to(signin_path)
+    end
+
+    it 'should 404 a non-member who tries to destroy a project' do
+      session[:id] = @user
+      delete :destroy, id: @project
+      expect(response.status).to eq(404)
+    end
+
+    it 'should 404 a Member who tries to destroy a project' do
+      session[:id] = @member
+      delete :destroy, id: @project
+      expect(response.status).to eq(404)
+    end
+
+    it 'should allow an Owner to destroy a project' do
+      session[:id] = @owner
+      delete :destroy, id: @project
+      expect(response).to redirect_to projects_path
+    end
+
+    it 'should allow an Admin to destroy a project' do
+      session[:id] = @admin
+      delete :destroy, id: @project
+      expect(response).to redirect_to projects_path
     end
 
   end

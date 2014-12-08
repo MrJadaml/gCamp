@@ -1,8 +1,8 @@
 class MembershipsController < ApplicationController
-  before_action do
-    @project = Project.find(params[:project_id])
+  before_action :set_project
+  before_action :delete_authorization, only: [:destroy]
+  before_action :update_authorization, only: [:update]
 
-  end
 
   def index
     @membership = @project.memberships.new
@@ -10,7 +10,7 @@ class MembershipsController < ApplicationController
   end
 
   def create
-    raise AccessDenied unless is_an_owner? || current_user.is_an_admin?
+    raise AccessDenied unless role_is_owner? || current_user.admin?
     @membership = @project.memberships.new(membership_params)
     if @membership.save
       redirect_to project_memberships_path,
@@ -23,7 +23,6 @@ class MembershipsController < ApplicationController
   end
 
   def update
-    raise AccessDenied unless is_an_owner? || current_user.is_an_admin?
     @membership = @project.memberships.find(params[:id])
     if @membership.update(membership_params)
       redirect_to project_memberships_path, notice: "#{@membership.user.first_name.capitalize} was updated successfully"
@@ -33,18 +32,29 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
-    raise AccessDenied unless is_an_owner? || current_user.is_an_admin?
     @membership = @project.memberships.find(params[:id])
     @project.memberships.find(params[:id]).destroy
-    redirect_to project_memberships_path, notice: "#{@membership.user.first_name.capitalize} was removed successfully"
+    if current_user.admin? || role_is_owner?
+      redirect_to project_memberships_path, notice: "#{@membership.user.first_name.capitalize} was removed successfully"
+    elsif record_owner?
+      redirect_to projects_path, notice: "Your membership was removed successfully"
+    end
   end
 
 
-  def is_an_owner?
-    @project.memberships.find_by(user_id: current_user.id).role == 'Owner'
+  def role_is_owner?
+    if @project.memberships.find_by(user_id: current_user.id) == nil
+      false
+    else
+      @project.memberships.find_by(user_id: current_user.id).role =='Owner'
+    end
   end
 
-  helper_method :is_an_owner?
+  def record_owner?
+    @membership.user_id == current_user.id
+  end
+
+  helper_method :role_is_owner?
 
   private
 
@@ -52,4 +62,17 @@ class MembershipsController < ApplicationController
       params.require(:membership).permit(:role, :user_id, :project_id)
     end
 
+    def set_project
+      @project = Project.find(params[:project_id])
+    end
+
+    def delete_authorization
+      @membership = @project.memberships.find(params[:id])
+      raise AccessDenied unless current_user.admin? || @project.memberships.find_by(user_id: current_user.id).role =='Owner'|| @membership.user_id == current_user.id
+    end
+
+    def update_authorization
+      @membership = @project.memberships.find(params[:id])
+      raise AccessDenied unless current_user.admin? || role_is_owner?
+    end
 end

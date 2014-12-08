@@ -1,9 +1,15 @@
 require 'rails_helper'
 describe UsersController do
   before do
+    @project = create_project
+    @membership = create_membership project: @project
     @user = create_user
+    @member = create_user
+    @owner = create_user
+    @member_membership = create_membership project: @project, user: @member
+    @owner_membership = create_membership project: @project, user: @owner, role: 'Owner'
+    @admin = create_user admin: true
   end
-
 # --------------------------------> #index <----------------------------------
 
   describe '#index'  do
@@ -51,16 +57,22 @@ describe '#edit' do
 
   it 'should redirect visitors to signin page' do
 
-    get :edit, id: @user
+    patch :edit, id: @user
     expect(response).to redirect_to(signin_path)
   end
 
   it 'should redirect visitors to signin page' do
 
-    get :update, id: @user
+    patch :update, id: @user
     expect(response).to redirect_to(signin_path)
   end
 
+  it 'should 404 non-admins that try to set admin attribute' do
+    session[:id] = @owner
+
+    patch :update, id: @user, user: {admin: true}
+    expect(response.status).to eq(404)
+  end
 end
 
 # --------------------------------> #destroy <--------------------------------
@@ -68,7 +80,7 @@ end
 
     it 'should redirect visitors to signin page' do
 
-      get :destroy, id: @user
+      delete :destroy, id: @user
       expect(response).to redirect_to(signin_path)
     end
 

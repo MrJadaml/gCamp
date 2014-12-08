@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :ensure_logged_in, :members_only
+  helper_method :current_user
 
   def current_user
     User.find_by(id: session[:id])
@@ -13,8 +14,6 @@ class ApplicationController < ActionController::Base
       redirect_to signin_path, notice: 'You must be logged in to access that action'
     end
   end
-
-  helper_method :current_user
 
   class AccessDenied < StandardError
   end

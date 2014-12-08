@@ -1,9 +1,11 @@
 = render 'shared/success'
+- if current_user.admin? || role_is_owner?
+  .pull-right
+    = link_to 'Edit', edit_project_path(@project), class: 'btn btn-info'
+%h3= @project.name
 %ul.breadcrumb
   %li= link_to 'Projects', projects_path
   %li= @project.name
-
-%h3= @project.name
 %div
   %p
     = link_to pluralize(@project.tasks.count, 'Task'), project_tasks_path(@project)
