@@ -20,7 +20,7 @@ describe MembershipsController do
     end
 
     it 'should 404 a non-member' do
-      session[:id] = @user
+      session[:id] = @user.id
       get :index, project_id: @project
       expect(response.status).to eq(404)
     end
@@ -28,7 +28,7 @@ describe MembershipsController do
     it 'should render index if user is a Member' do
       membership = create_membership user: @user, project: @project
 
-      session[:id] = @user
+      session[:id] = @user.id
       get :index, project_id: @project
       expect(response).to be_success
     end
@@ -36,7 +36,7 @@ describe MembershipsController do
     it 'should render index if user is an Owner' do
       membership = create_membership user: @user, project: @project, role: 'Owner'
 
-      session[:id] = @user
+      session[:id] = @user.id
       get :index, project_id: @project
       expect(response).to be_success
     end
@@ -44,7 +44,7 @@ describe MembershipsController do
     it 'should render index if user is an Admin' do
       membership = create_membership user: @admin
 
-      session[:id] = @admin
+      session[:id] = @admin.id
       get :index, project_id: @project
       expect(response).to be_success
     end
@@ -60,7 +60,7 @@ describe MembershipsController do
     end
 
     it 'should 404 a non-member' do
-      session[:id] = @user
+      session[:id] = @user.id
 
       post :create, project_id: @project
       expect(response.status).to eq(404)
@@ -69,7 +69,7 @@ describe MembershipsController do
     it 'should 404 if user is a Member' do
       membership = create_membership user: @user, project: @project
 
-      session[:id] = @user
+      session[:id] = @user.id
       post :create, project_id: @project
       expect(response.status).to eq(404)
     end
@@ -77,7 +77,7 @@ describe MembershipsController do
     it 'should allow an Owner to create a membership' do
       membership = create_membership user: @user, project: @project, role: 'Owner'
 
-      session[:id] = @user
+      session[:id] = @user.id
       post :create, project_id: @project, membership: {role: 'Member'}
       expect(response).to be_success
     end
@@ -85,7 +85,7 @@ describe MembershipsController do
     it 'should allow an Admin to create a membership' do
       membership = create_membership user: @admin, project: @project
 
-      session[:id] = @admin
+      session[:id] = @admin.id
       post :create, project_id: @project, membership: {role: 'Member'}
       expect(response).to be_success
     end
@@ -102,7 +102,7 @@ describe MembershipsController do
     end
 
     it 'should 404 a non-member' do
-      session[:id] = @user
+      session[:id] = @user.id
       patch :update, project_id: @project, id: @membership
       expect(response.status).to eq(404)
     end
@@ -110,7 +110,7 @@ describe MembershipsController do
     it 'should 404 if user is a Member' do
       membership = create_membership user: @user, project: @project
 
-      session[:id] = @user
+      session[:id] = @user.id
       patch :update, project_id: @project, id: @membership, membership: {role: 'Member'}
       expect(response.status).to eq(404)
     end
@@ -118,7 +118,7 @@ describe MembershipsController do
     it 'should allow an Owner to update a membership' do
       membership = create_membership user: @user, project: @project, role: 'Owner'
 
-      session[:id] = @user
+      session[:id] = @user.id
       patch :update, project_id: @project, id: @membership, membership: {role: 'Owner'}
       expect(response).to redirect_to project_memberships_path
     end
@@ -126,7 +126,7 @@ describe MembershipsController do
     it 'should allow an Admin to update a membership' do
       membership = create_membership user: @admin, project: @project
 
-      session[:id] = @admin
+      session[:id] = @admin.id
       patch :update, project_id: @project, id: @membership, membership: {role: 'Member'}
       expect(response).to redirect_to project_memberships_path
     end
@@ -143,7 +143,7 @@ describe MembershipsController do
     end
 
     it 'should 404 a non-member trying to delete a membership' do
-      session[:id] = @user
+      session[:id] = @user.id
       delete :destroy, project_id: @project, id: @membership
       expect(response.status).to eq(404)
     end
@@ -151,13 +151,13 @@ describe MembershipsController do
     it 'should 404 a Member trying to delete a membership that\'s not theirs' do
       membership = create_membership user: @user, project: @project
 
-      session[:id] = @user
+      session[:id] = @user.id
       delete :destroy, project_id: @project, id: @membership, membership: {role: 'Member'}
       expect(response.status).to eq(404)
     end
 
     it 'should allow a Member to delete their own membership' do
-      session[:id] = @member
+      session[:id] = @member.id
       delete :destroy, project_id: @project, id: @member_membership
       expect(response).to redirect_to projects_path
     end
@@ -165,7 +165,7 @@ describe MembershipsController do
     it 'should allow an Owner to destroy memberships' do
       membership = create_membership user: @user, project: @project, role: 'Owner'
 
-      session[:id] = @user
+      session[:id] = @user.id
       delete :destroy, project_id: @project, id: @membership, membership: {role: 'Member'}
       expect(response).to redirect_to project_memberships_path
     end
@@ -173,12 +173,18 @@ describe MembershipsController do
     it 'should allow an Admin to destroy memberships' do
       membership = create_membership user: @admin, project: @project
 
-      session[:id] = @admin
+      session[:id] = @admin.id
       delete :destroy, project_id: @project, id: @membership, membership: {role: 'Member'}
       expect(response.status).to redirect_to project_memberships_path
     end
 
-    it 'should not allow the last Owner membership to be deleted'
+    it 'should not allow the last Owner membership to be deleted' do
+      membership = create_membership user: @user, project: @project, role: 'Owner'
+      count = @project.memberships.where('role = ?', 'Owner').count
 
+      session[:id] = @user.id
+      delete :destroy, project_id: @project, id: membership.id
+      expect(@project.memberships.where('role = ?', 'Owner').count).to eq(count)
+    end
   end
 end

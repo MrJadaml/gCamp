@@ -27,6 +27,7 @@ class ProjectsController < ApplicationController
 
   def edit
     set_project
+    raise AccessDenied unless role_is_owner? || current_user.admin?
   end
 
   def update

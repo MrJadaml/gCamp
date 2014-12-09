@@ -9,5 +9,6 @@
   %dt Last name
   %dd= @user.last_name
   %br
-  %dt Email
-  %dd= mail_to @user.email
+  -if current_user.admin? || share_projects?
+    %dt Email
+    %dd= mail_to @user.email

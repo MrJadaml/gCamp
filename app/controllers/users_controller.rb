@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :members_only
+  before_action :update_authorization, only: [:update]
+
   def index
     @users = User.all
   end
@@ -23,14 +25,23 @@ class UsersController < ApplicationController
 
   def edit
     set_user
+    raise AccessDenied unless current_user.admin? || @user.id == current_user.id
   end
 
   def update
     set_user
-    if @user.update(user_params)
-      redirect_to users_path, notice: "User was updated successfully"
+    if current_user.admin?
+      if @user.update(admin_update_params)
+        redirect_to users_path, notice: "User was updated successfully"
+      else
+        render :edit
+      end
     else
-       render :edit
+      if @user.update(user_params)
+        redirect_to users_path, notice: "User was updated successfully"
+      else
+         render :edit
+      end
     end
   end
 
@@ -40,10 +51,34 @@ class UsersController < ApplicationController
     redirect_to users_path, notice: "User was deleted successfully"
   end
 
+
+  def share_projects?
+    @user = User.find(params[:id])
+    (current_user.memberships.pluck(:project_id) & @user.memberships.pluck(:project_id)).empty? != true
+  end
+
+  helper_method :record_is_current_users?, :share_projects?
+
   private
 
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def update_authorization
+      @user = User.find(params[:id])
+      raise AccessDenied unless current_user.admin || @user.id == current_user.id
+    end
+
+    def admin_update_params
+      params.require(:user).permit(
+      :first_name,
+      :last_name,
+      :email,
+      :password,
+      :password_confirmation,
+      :admin
+      )
     end
 
     def user_params

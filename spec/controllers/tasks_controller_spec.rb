@@ -20,7 +20,7 @@ describe TasksController do
     end
 
     it 'should 404 on project pages for non-members' do
-      session[:id] = @user
+      session[:id] = @user.id
       get :index, project_id: @project
       expect(response.status).to eq(404)
     end
@@ -28,7 +28,7 @@ describe TasksController do
     it 'should render index if user is a Member' do
       membership = create_membership user: @user, project: @project
 
-      session[:id] = @user
+      session[:id] = @user.id
       get :index, project_id: @project
       expect(response).to be_success
     end
@@ -36,7 +36,7 @@ describe TasksController do
     it 'should render index if user is an Owner' do
       membership = create_membership user: @user, project: @project
 
-      session[:id] = @user
+      session[:id] = @user.id
       get :index, project_id: @project
       expect(response).to be_success
     end
@@ -60,7 +60,7 @@ describe TasksController do
     end
 
     it 'should 404 on project pages for non-members' do
-      session[:id] = @user
+      session[:id] = @user.id
       get :show, project_id: @project, id: @task
       expect(response.status).to eq(404)
     end
@@ -68,7 +68,7 @@ describe TasksController do
     it 'should render show if user is a Member' do
       membership = create_membership user: @user, project: @project
 
-      session[:id] = @user
+      session[:id] = @user.id
       get :show, project_id: @project, id: @task
       expect(response).to be_success
     end
@@ -76,7 +76,7 @@ describe TasksController do
     it 'should render show if user is an Owner' do
       membership = create_membership user: @user, project: @project
 
-      session[:id] = @user
+      session[:id] = @user.id
       get :show, project_id: @project, id: @task
       expect(response).to be_success
     end
@@ -101,7 +101,7 @@ describe TasksController do
     end
 
     it 'should 404 on project pages for non-members' do
-      session[:id] = @user
+      session[:id] = @user.id
 
       get :new, project_id: @project
       expect(response.status).to eq(404)
@@ -109,7 +109,7 @@ describe TasksController do
 
     it 'should render #new if user is a Member' do
       membership = create_membership user: @user, project: @project
-      session[:id] = @user
+      session[:id] = @user.id
 
       get :new, project_id: @project
       expect(response).to be_success
@@ -117,7 +117,7 @@ describe TasksController do
 
     it 'should render show if user is an Owner' do
       membership = create_membership user: @user, project: @project
-      session[:id] = @user
+      session[:id] = @user.id
 
       get :new, project_id: @project
       expect(response).to be_success
@@ -143,7 +143,7 @@ describe TasksController do
     end
 
     it 'should 404 on project pages for non-members' do
-      session[:id] = @user
+      session[:id] = @user.id
       get :edit, project_id: @project, id: @task
       expect(response.status).to eq(404)
     end
@@ -151,7 +151,7 @@ describe TasksController do
     it 'should render edit if user is a Member' do
       membership = create_membership user: @user, project: @project
 
-      session[:id] = @user
+      session[:id] = @user.id
       get :edit, project_id: @project, id: @task
       expect(response).to be_success
     end
@@ -159,7 +159,7 @@ describe TasksController do
     it 'should render show if user is an Owner' do
       membership = create_membership user: @user, project: @project
 
-      session[:id] = @user
+      session[:id] = @user.id
       get :edit, project_id: @project, id: @task
       expect(response).to be_success
     end
@@ -183,40 +183,33 @@ describe TasksController do
     end
 
     it 'should 404 on project pages for non-members' do
-      session[:id] = @user
+      session[:id] = @user.id
       get :destroy, project_id: @project, id: @task
       expect(response.status).to eq(404)
     end
 
     it 'should allow destroy if user is a Member' do
-    skip
-      membership = @project.memberships.create!(
-        user: @user,
-        project: @project,
-        role: 'Member'
-      )
+      membership = create_membership user: @user, project: @project, role: 'Member'
 
-      session[:id] = @user
+      session[:id] = @user.id
       get :destroy, project_id: @project, id: @task
-      expect(response).to be_success
+      expect(response).to redirect_to project_tasks_path(@project, @task)
     end
 
     it 'should render show if user is an Owner' do
-    skip
       membership = create_membership user: @user, project: @project
 
-      session[:id] = @user
+      session[:id] = @user.id
       get :destroy, project_id: @project, id: @task
-      expect(response).to be_success
+      expect(response).to redirect_to project_tasks_path(@project, @task)
     end
 
     it 'should allow destroy if user is an admin' do
-    skip
     admin = create_user admin: true
 
       session[:id] = admin.id
       get :destroy, project_id: @project, id: @task
-      expect(response).to be_success
+      expect(response).to redirect_to project_tasks_path(@project, @task)
     end
 
   end

@@ -16,25 +16,25 @@
       .container
         = link_to "gCamp", projects_path, class: 'navbar-brand'
         %ul.nav.navbar-nav
-          -if current_user.admin?
-            %li.dropdown
-              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                Projects
-                %span.caret
-              %ul.dropdown-menu{:role => "menu"}
-                - @projects.each do |project|
-                  %li= link_to project.name, project_path(project)
-                %li.divider
-          -else
-            %li.dropdown
-              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                My Projects
-                %span.caret
-              %ul.dropdown-menu{:role => "menu"}
-                - current_user.projects.each do |project|
-                  %li= link_to project.name, project_path(project)
-                %li.divider
-                %li= link_to 'New Project', new_project_path
+          -# -if current_user.admin?
+          -#   %li.dropdown
+          -#     %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          -#       Projects
+          -#       %span.caret
+          -#     %ul.dropdown-menu{:role => "menu"}
+          -#       - @projects.each do |project|
+          -#         %li= link_to project.name, project_path(project)
+          -#       %li.divider
+          -# -else
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              My Projects
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              - current_user.projects.each do |project|
+                %li= link_to project.name, project_path(project)
+              %li.divider
+              %li= link_to 'New Project', new_project_path
           %li= link_to 'Users', users_path
 
         %ul.nav.navbar-nav.navbar-right

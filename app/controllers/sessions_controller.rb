@@ -9,7 +9,7 @@ class SessionsController < PublicController
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:id] = user.id
-      redirect_to projects_path
+      redirect_back_or projects_path
     else
       @sign_in_error = "Username / password combo is invalid"
       render :new
@@ -20,4 +20,6 @@ class SessionsController < PublicController
     session.destroy
     redirect_to root_path
   end
+
+
 end

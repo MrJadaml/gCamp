@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :ensure_logged_in, :members_only
   helper_method :current_user
+  include ApplicationHelper
 
   def current_user
     User.find_by(id: session[:id])
@@ -11,6 +12,7 @@ class ApplicationController < ActionController::Base
 
   def ensure_logged_in
     unless current_user
+      store_location
       redirect_to signin_path, notice: 'You must be logged in to access that action'
     end
   end
