@@ -1,5 +1,5 @@
 = render 'shared/success'
-- if current_user.admin? || role_is_owner?
+- if current_user.admin? || current_user.is_project_owner?(@project)
   .pull-right
     = link_to 'Edit', edit_project_path(@project), class: 'btn btn-info'
 %h3= @project.name

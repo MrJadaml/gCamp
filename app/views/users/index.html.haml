@@ -19,6 +19,7 @@
     -if current_user.admin? || (current_user.memberships.pluck(:project_id) & user.memberships.pluck(:project_id)).empty? != true
       %td
         .col-md-9= mail_to user.email
-    %td
-      .pull-right
-        = link_to 'Edit', edit_user_path(user), class: 'btn btn-warning'
+    -if current_user.admin? || user.id == current_user.id
+      %td
+        .pull-right
+          = link_to 'Edit', edit_user_path(user), class: 'btn btn-warning'

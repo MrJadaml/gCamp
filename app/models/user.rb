@@ -16,4 +16,7 @@ class User < ActiveRecord::Base
     self.admin
   end
 
+  def is_project_owner?(project)
+    self.memberships.where(project_id: project.id, role: 'Owner').any?
+  end
 end

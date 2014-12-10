@@ -27,7 +27,7 @@ class ProjectsController < ApplicationController
 
   def edit
     set_project
-    raise AccessDenied unless role_is_owner? || current_user.admin?
+    raise AccessDenied unless current_user.is_project_owner?(@project) || current_user.admin?
   end
 
   def update
@@ -44,13 +44,6 @@ class ProjectsController < ApplicationController
     redirect_to projects_path, notice: 'Project was destroyed!'
   end
 
-
-  def role_is_owner?
-    @project.memberships.find_by(user_id: current_user.id).role =='Owner'
-  end
-
-  helper_method :role_is_owner?
-
   private
 
   def project_params
@@ -63,12 +56,12 @@ class ProjectsController < ApplicationController
 
   def update_authorization
     set_project
-    raise AccessDenied unless current_user.admin? || role_is_owner?
+    raise AccessDenied unless current_user.admin? || current_user.is_project_owner?(@project)
   end
 
   def delete_authorization
     set_project
-    raise AccessDenied unless current_user.admin? || role_is_owner?
+    raise AccessDenied unless current_user.admin? || current_user.is_project_owner?(@project)
   end
 
 end

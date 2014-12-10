@@ -10,7 +10,7 @@ class MembershipsController < ApplicationController
   end
 
   def create
-    raise AccessDenied unless role_is_owner? || current_user.admin?
+    raise AccessDenied unless current_user.is_project_owner?(@project) || current_user.admin?
     @membership = @project.memberships.new(membership_params)
     if @membership.save
       redirect_to project_memberships_path,
@@ -33,29 +33,15 @@ class MembershipsController < ApplicationController
 
   def destroy
     @membership = @project.memberships.find(params[:id])
-
-    if @project.memberships.find(params[:id]).destroy && current_user.admin? || role_is_owner?
+    @project.memberships.find(params[:id]).destroy
+    if current_user.admin?
       redirect_to project_memberships_path, notice: "#{@membership.user.first_name.capitalize} was removed successfully"
-    elsif record_owner?
+    elsif @membership.user_id == current_user.id
       redirect_to projects_path, notice: "Your membership was removed successfully"
     else
       redirect_to project_memberships_path, notice: "You can't delete the last Owner"
     end
   end
-
-  def role_is_owner?
-    if @project.memberships.find_by(user_id: current_user.id) == nil
-      false
-    else
-      @project.memberships.find_by(user_id: current_user.id).role =='Owner'
-    end
-  end
-
-  def record_owner?
-    @membership.user_id == current_user.id
-  end
-
-  helper_method :role_is_owner?
 
   private
 
@@ -69,12 +55,12 @@ class MembershipsController < ApplicationController
 
     def delete_authorization
       @membership = @project.memberships.find(params[:id])
-      raise AccessDenied unless current_user.admin? || @project.memberships.find_by(user_id: current_user.id).role =='Owner'|| @membership.user_id == current_user.id
+      raise AccessDenied unless current_user.admin? || @membership.user_id == current_user.id || current_user.is_project_owner?(@project)
     end
 
     def update_authorization
       @membership = @project.memberships.find(params[:id])
-      raise AccessDenied unless current_user.admin? || role_is_owner?
+      raise AccessDenied unless current_user.admin? || current_user.is_project_owner?(@project)
     end
 
 end
