@@ -41,7 +41,7 @@ feature "Sessions" do
     within('.actions') do
       click_on 'Sign in'
     end
-    expect(page).to have_content('What people are saying:')
+    expect(page).to have_content('Create Project')
   end
 
 
@@ -63,10 +63,4 @@ feature "Sessions" do
     click_on 'Sign Out'
     expect(page).to have_content('Sign Up')
   end
-
-  scenario 'Visitor gets redirected to signin page when accessing resource pages' do
-    visit projets_path
-    expect(page).to have_content('You must be logged in to acces that action')
-  end
-
 end
