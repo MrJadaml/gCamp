@@ -1,6 +1,6 @@
 class MembershipsController < ApplicationController
   before_action :set_project
-  before_action :delete_authorization, :can_not_delete_last_owner, only: [:destroy]
+  before_action :delete_authorization, only: [:destroy]
   before_action :update_authorization, only: [:update]
 
 
@@ -33,14 +33,15 @@ class MembershipsController < ApplicationController
 
   def destroy
     @membership = @project.memberships.find(params[:id])
-    @project.memberships.find(params[:id]).destroy
-    if current_user.admin? || role_is_owner?
+
+    if @project.memberships.find(params[:id]).destroy && current_user.admin? || role_is_owner?
       redirect_to project_memberships_path, notice: "#{@membership.user.first_name.capitalize} was removed successfully"
     elsif record_owner?
       redirect_to projects_path, notice: "Your membership was removed successfully"
+    else
+      redirect_to project_memberships_path, notice: "You can't delete the last Owner"
     end
   end
-
 
   def role_is_owner?
     if @project.memberships.find_by(user_id: current_user.id) == nil
@@ -76,7 +77,4 @@ class MembershipsController < ApplicationController
       raise AccessDenied unless current_user.admin? || role_is_owner?
     end
 
-    def can_not_delete_last_owner
-      redirect_to project_memberships_path, notice: "You can't delete the last Owner" unless @project.memberships.where('role = ?', 'Owner').count > 1
-    end
 end
