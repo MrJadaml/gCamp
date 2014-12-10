@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :memberships, dependent: :destroy
+  has_many :memberships, dependent: :delete_all
   has_many :comments, dependent: :nullify
   has_many :projects, through: :memberships
 
@@ -19,4 +19,13 @@ class User < ActiveRecord::Base
   def is_project_owner?(project)
     self.memberships.where(project_id: project.id, role: 'Owner').any?
   end
+
+  # def delete_user
+  #   if membership_condition
+  #     false
+  #   else
+  #     self.destroy
+  #     # other shit to do
+  #   end
+  # end
 end
