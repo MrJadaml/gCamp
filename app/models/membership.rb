@@ -7,7 +7,6 @@ class Membership<ActiveRecord::Base
   before_destroy :confirm_owner_count
 
   def confirm_owner_count
-  binding.pry
     owners = project.memberships.where('role = ?', 'Owner')
     if owners.count == 1 && role == 'Owner'
       return false

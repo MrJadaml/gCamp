@@ -20,9 +20,21 @@ feature "Users" do
     click_on 'Create User'
     fill_in 'First name', with: 'Carl'
     fill_in 'Last name', with: 'Sagen'
-    fill_in 'Email', with: 'smart@mail.com'
+    fill_in 'Email', with: @user.email
     click_on 'Create User'
     expect(page).to have_content("Email has already been taken")
+  end
+
+  scenario 'users can enter a tracker token' do
+    visit users_path
+    click_on 'Create User'
+    fill_in 'First name', with: 'Carl'
+    fill_in 'Last name', with: 'Sagen'
+    fill_in 'Email', with: 'smart@mail.com'
+    fill_in 'Tracker token', with: 'f1111e111111d1f1111be11d1111a111'
+    save_and_open_page
+    click_on 'Create User'
+    expect(page).to have_content("Successfully created user")
   end
 
 end

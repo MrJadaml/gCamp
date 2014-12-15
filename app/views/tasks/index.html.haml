@@ -35,10 +35,8 @@
       .col-md-2
         - if task.complete == true
           .col-lg-1.glyphicon.glyphicon-check
-            -# =link_to complete_tasks_path(task), method: :patch
         - else
           .col-lg-1.glyphicon.glyphicon-unchecked
-            -# =link_to complete_tasks_path(task), method: :patch
     %td
       .col-md-2= task.due_date
     %td

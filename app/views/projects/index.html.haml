@@ -2,7 +2,7 @@
 %div
   .pull-right
     = link_to 'Create Project', new_project_path, class: 'btn btn-primary pull-right'
-  %h1 Projects
+  %h2 Projects
 %table.table
   %thead
     %tr
@@ -37,3 +37,15 @@
         %td
           .col-md-4
             = link_to project.tasks.count, project_tasks_path(project, @task)
+
+%h2 Pivotal Tracker Projects
+%table.table
+  %thead
+    %tr
+      %th.col-md-4 Name
+    - @tracker_projects.each do |project|
+      .col-md-12
+      %tr
+        %td
+          .col-md-4.row
+            = link_to project[:name], tracker_project_path(project[:id], all: true)

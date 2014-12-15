@@ -1,10 +1,11 @@
 class ProjectsController < ApplicationController
-  skip_before_action :members_only, only: [:index, :new, :create]
+  skip_before_action :members_only, only: [:index, :new, :create, :tracker_projects]
   before_action :update_authorization, only: [:update]
   before_action :delete_authorization, only: [:destroy]
 
   def index
     @projects = Project.all
+    @tracker_projects = TrackerAPI.new.projects(current_user.tracker_token)
   end
 
   def new
@@ -22,7 +23,8 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    set_project
+    tracker_api = TrackerAPI.new
+    @tracker_projects = tracker_api.projects(current_user.tracker_token)
   end
 
   def edit
@@ -42,6 +44,18 @@ class ProjectsController < ApplicationController
   def destroy
     Project.find(params[:id]).destroy
     redirect_to projects_path, notice: 'Project was destroyed!'
+  end
+
+  def tracker_projects
+    track_api = TrackerAPI.new
+    if params[:all]
+      @tracker_stories = track_api.stories(current_user.tracker_token, params[:id])
+    elsif params[:unstarted]
+      @tracker_stories = track_api.unstarted(current_user.tracker_token, params[:id])
+    else
+      @tracker_stories = track_api.rejected(current_user.tracker_token, params[:id])
+    end
+    @tracker_project = track_api.project(current_user.tracker_token, params[:id])
   end
 
   private

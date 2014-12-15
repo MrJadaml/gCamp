@@ -14,6 +14,7 @@ gem 'sass-rails', '>= 3.2'
 gem 'autoprefixer-rails'
 gem 'bcrypt', '~> 3.1.7'
 gem 'faker'
+gem 'faraday', '~> 0.9.0'
 
 group :production do
   gem 'rails_12factor'

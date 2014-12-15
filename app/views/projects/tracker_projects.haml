@@ -1,0 +1,43 @@
+%div
+  .pull-right
+    = link_to_unless params[:all], 'All',
+      tracker_project_path(@tracker_project[:id], all: true)
+    |
+    = link_to_unless params[:unstarted], 'Unstarted',
+      tracker_project_path(@tracker_project[:id], unstarted: true)
+    |
+    = link_to_unless params[:rejected], 'Rejected',
+      tracker_project_path(@tracker_project[:id], rejected: true)
+    -# -binding.pry
+    %p (Showing first 500)
+  %h2.pannel= "Storeis for #{@tracker_project[:name]}"
+.table-responsive
+  %table.table.table-bordered.table-striped
+    %colgroup
+      %col.col-xs-7
+      %col.col-xs-1
+      %col.col-xs-2
+      %col.col-xs-2
+    %thead
+      %tr
+        %th Name
+        %th Estimate
+        %th Labels
+        %th Current State
+    %tbody
+      - @tracker_stories.each do |story|
+        %tr
+          %td
+            .col-md-7.row
+              = link_to story[:name], story[:url], target: '_blank'
+          %td
+            .col-md-1
+              = link_to story[:estimate] unless story[:estimate] == nil
+          %td
+            -x = []
+            - story[:labels].each do |label|
+              - x << label[:name]
+            = x.join(", ")
+          %td
+            .col-md-2
+              = link_to story[:current_state]

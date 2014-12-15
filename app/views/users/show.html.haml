@@ -13,3 +13,5 @@
   -if current_user.admin? || share_projects?
     %dt Email
     %dd= mail_to @user.email
+  %dt Pivotal Tracker Token
+  %dd= @token_filter

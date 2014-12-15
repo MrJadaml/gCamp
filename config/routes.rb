@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :memberships
+
     resources :tasks do
       resources :comments, only: [:create]
       collection do
@@ -20,4 +21,5 @@ Rails.application.routes.draw do
   get  'signin' => 'sessions#new'
   post 'signin' => 'sessions#create'
   get 'signout' => 'sessions#destroy'
+  get 'tracker_project/:id' => 'projects#tracker_projects', as: :tracker_project
 end

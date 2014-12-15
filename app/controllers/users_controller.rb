@@ -21,6 +21,7 @@ class UsersController < ApplicationController
 
   def show
     set_user
+    @token_filter = TrackerAPI.new.token_filter(current_user.tracker_token)
   end
 
   def edit
@@ -77,6 +78,7 @@ class UsersController < ApplicationController
       :email,
       :password,
       :password_confirmation,
+      :tracker_token,
       :admin
       )
     end
@@ -87,7 +89,8 @@ class UsersController < ApplicationController
         :last_name,
         :email,
         :password,
-        :password_confirmation
+        :password_confirmation,
+        :tracker_token
       )
     end
 end

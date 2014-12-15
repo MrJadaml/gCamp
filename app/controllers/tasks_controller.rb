@@ -1,8 +1,5 @@
 class TasksController < ApplicationController
   before_action :members_only
-  # before_action do
-  #   @project = Project.find(params[:project_id])
-  # end
 
   def index
     if params[:all]
