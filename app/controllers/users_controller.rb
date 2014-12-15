@@ -21,7 +21,9 @@ class UsersController < ApplicationController
 
   def show
     set_user
-    @token_filter = TrackerAPI.new.token_filter(current_user.tracker_token)
+    unless current_user.tracker_token.nil?
+      @token_filter = TrackerAPI.new.token_filter(current_user.tracker_token)
+    end
   end
 
   def edit

@@ -20,12 +20,4 @@ class User < ActiveRecord::Base
     self.memberships.where(project_id: project.id, role: 'Owner').any?
   end
 
-  # def delete_user
-  #   if membership_condition
-  #     false
-  #   else
-  #     self.destroy
-  #     # other shit to do
-  #   end
-  # end
 end

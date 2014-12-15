@@ -58,8 +58,4 @@ class TrackerAPI
     tracker_token[0..3] + tracker_token.from(4).gsub(/./,'*')
   end
 
-  def project_name
-
-  end
-
 end
