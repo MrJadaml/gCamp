@@ -19,8 +19,9 @@
       - if current_user.admin? || current_user.is_project_owner?(@project)
         = f.select :role, ['Owner', 'Member'], {}, class: 'form-control'
         = f.submit 'Update', class: 'btn btn-primary'
-        = link_to project_membership_path(@project, member), method: :delete, data: { confirm: 'Are you sure?' } do
-          %span.glyphicon.glyphicon-remove.red
+        - unless member.confirm_owner_count == false  
+          = link_to project_membership_path(@project, member), method: :delete, data: { confirm: 'Are you sure?' } do
+            %span.glyphicon.glyphicon-remove.red
       - elsif member.user_id == current_user.id
         = link_to project_membership_path(@project, member), method: :delete, data: { confirm: 'Are you sure?' } do
           %span.glyphicon.glyphicon-remove.red
